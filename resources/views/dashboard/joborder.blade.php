@@ -8,6 +8,29 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+
+                    <form method="POST" action="{{URL::to('dashboard/newclient/new')}}">
+                        <div class="form-group">
+                            <label for="login">Login:</label>
+                            <input type="text" class="form-control" name="login">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="text" class="form-control" name="passsword">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone number:</label>
+                            <input type="tel" class="form-control" name="phone_number">
+                        </div>
+
+                    </form>
+
+                    <hr>
+
                     <div>
                         <label for="description">Client Exists?</label>
                         <input type="radio" name="clientexist" onclick="existingClient(true)" value="1">Yes

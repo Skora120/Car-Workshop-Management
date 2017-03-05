@@ -22,6 +22,8 @@ Route::get('/dashboard', 'DashboardController@index');
 //Employees
 Route::get('/dashboard/newjoborder', 'DashboardController@jobOrder');
 Route::post('/dashboard/newjoborder/new', 'DashboardController@jobOrderPost');
+Route::get('/dashboard/newclient', 'DashboardController@client');
+Route::post('/dashboard/newclient/new', 'DashboardController@newclient');
 Route::get('/dashboard/newPartOrder', 'DashboardController@partOrder');
 
 //Clients
