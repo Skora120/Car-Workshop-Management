@@ -9,6 +9,8 @@
 
                 <div class="panel-body">
                     You are logged in!
+
+                    <a href="{{ url()->current() }}/newjoborder">Add new job order</a>
                 </div>
             </div>
         </div>

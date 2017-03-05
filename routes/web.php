@@ -11,9 +11,17 @@
 |
 */
 
-// Workshop public page //
+//Workshop public page//
 Route::get('/', 'PublicSiteController@index');
 
 Auth::routes();
 
+//Dashboard
 Route::get('/dashboard', 'DashboardController@index');
+
+//Employees
+Route::get('/dashboard/newjoborder', 'DashboardController@jobOrder');
+Route::post('/dashboard/newjoborder/new', 'DashboardController@jobOrderPost');
+Route::get('/dashboard/newPartOrder', 'DashboardController@partOrder');
+
+//Clients
