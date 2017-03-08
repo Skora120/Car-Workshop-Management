@@ -45,7 +45,10 @@ class ClientController extends Controller
         if(Auth::user()->level >= 2){
 
             $this->validate($request, [
-                'description' => 'required|min:6',
+                'username' => 'required|unique:users|max:255|min:8',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+                'phone_number' => 'required|max:10'
             ]);
 
             $user = new User;
