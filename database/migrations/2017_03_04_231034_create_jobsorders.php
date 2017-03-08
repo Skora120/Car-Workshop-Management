@@ -19,6 +19,7 @@ class CreateJobsorders extends Migration
             $table->integer('client_id');
             $table->integer('car_id');
             $table->string('description');
+            $table->string('progress');
             $table->tinyInteger('pirority');
             $table->timestamps();
         });

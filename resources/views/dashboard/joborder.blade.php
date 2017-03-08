@@ -9,6 +9,8 @@
 
                 <div class="panel-body">
 
+                <details>
+                    <summary>Add client form</summary>
                     <form method="POST" action="{{URL::to('dashboard/newclient/new')}}">
                         <div class="form-group">
                             <label for="login">Login:</label>
@@ -28,6 +30,7 @@
                         </div>
 
                     </form>
+                </details>
 
                     <hr>
 
