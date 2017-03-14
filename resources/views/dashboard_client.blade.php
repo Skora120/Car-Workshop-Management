@@ -8,12 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
-
-                    <p><a href="{{ url()->current() }}/newjoborder">Add new job order</a></p>
-                    <p><a href="{{ url()->current() }}/jobs">Current jobs</a></p>
-                    <p><a href="{{ url()->current() }}/newclient">Add new client</a></p>
-
+                    You are logged in as Client.
                 </div>
             </div>
         </div>

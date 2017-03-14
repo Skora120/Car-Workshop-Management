@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Cars;
 use App\User;
+use Hash;
 
 use Log;
 
@@ -47,16 +48,18 @@ class ClientController extends Controller
             $this->validate($request, [
                 'username' => 'required|unique:users|max:255|min:8',
                 'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|min:6|confirmed',
+                'password' => 'required|min:6',
                 'phone_number' => 'required|max:10'
             ]);
+
+            $password = Hash::make($request->password);
 
             $user = new User;
 
             $user->username = $request->username;
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->password = bcrypt($request->passsword);
+            $user->password = $password;
             $user->phone_number = $request->phone_number;
             $user->level = 1;
 

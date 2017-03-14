@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>
-                            <input type="text" class="form-control" name="passsword">
+                            <input type="text" class="form-control" name="password">
                             @if($errors->has('password'))
                                 <span class="text-danger">
                                     <strong>{{ $errors->first('password') }}</strong>

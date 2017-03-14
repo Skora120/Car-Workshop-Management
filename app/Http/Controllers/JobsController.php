@@ -66,9 +66,8 @@ class JobsController extends Controller
                         break;
                 }
 
-                Log::info($value->created_at);
-
                 $data[$key] = [
+                'id' => $value->id,
                 'data' => $value->created_at,
                 'progress' => $progress,
                 'description' => $value->description,
@@ -81,6 +80,23 @@ class JobsController extends Controller
             return view('dashboard.jobs', ['data' => $data]);
         }else{
             return back()->with('failed', "You don't have acces to this page");
+        }
+    }
+
+    public function indexDescription($id)
+    {
+        if(Auth::user()->level >= 2){
+            $result = JobOrders::where('id', $id)->get();
+
+            return view('dashboard.jobEmp', ['data' => $result]);
+        }else{
+            $result = JobOrders::where('client_id', Auth::id())->where('id', $id)->get();
+
+            if(!empty($result[0])){
+                return view('dashboard.jobClie', ['data' => $result]);
+            }else{
+                return view('dashboard.jobNotFound');
+            }
         }
     }
 
