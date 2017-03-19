@@ -7,6 +7,7 @@ use Auth;
 use App\Cars;
 use App\User;
 use Hash;
+use Validator;
 
 use Log;
 
@@ -19,7 +20,7 @@ class ClientController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:employee');
     }
 
     /**
@@ -29,46 +30,66 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
-    }
+        $result = User::all();
 
-    public function client()
-    {
-        if(Auth::user()->level >= 2){
-            return view('dashboard.client');
-        }else{
-            return back()->with('failed', "You don't have acces to this page");
+        foreach ($result as $key => $value) {
+            $client = User::find($value->id);
+            $cars_count = $client->cars()->count();
+            $result[$key]['cars_count'] = $cars_count;
         }
+
+
+        return view('dashboard.clients.clients', ['data' => $result]);
     }
 
-    public function newclient(Request $request)
+    public function indexDescription($id)
     {
-        if(Auth::user()->level >= 2){
+        $result = User::find($id);
 
-            $this->validate($request, [
-                'username' => 'required|unique:users|max:255|min:8',
-                'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|min:6',
-                'phone_number' => 'required|max:10'
-            ]);
+        // Show profile and cars and magane
+        $data = ['test' => 'test'];
 
-            $password = Hash::make($request->password);
 
-            $user = new User;
 
-            $user->username = $request->username;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = $password;
-            $user->phone_number = $request->phone_number;
-            $user->level = 1;
 
-            $user->save();
-
-            return back()->with('success', "New client added");
-
-        }else{
-            return back()->with('failed', "You don't have acces to this page");
-        }
+        return view('dashboard.clients.client', ['data' => $data]);
     }
+
+    public function newClient()
+    {
+        return view('dashboard.clients.newclient');
+    }
+
+    public function newClientPost(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|unique:users|max:255|min:8',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6',
+            'phone_number' => 'required|max:11'
+        ]);
+
+        if($validator->fails()){
+            return back()->withInput($request->all())->withErrors($validator);
+        }
+
+        $password = Hash::make($request->password);
+
+        $user = new User;
+
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $password;
+        $user->phone_number = $request->phone_number;
+
+        $user->save();
+
+        return back()->with('success', "New client added");
+    }
+    //client update
+
+    //client delte
+
+
 }

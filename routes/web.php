@@ -25,25 +25,21 @@ Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
 
+	Route::get('/clients', 'ClientController@index')->name('clients');
+	Route::get('/clients/id/{id}', 'ClientController@indexDescription');
+	Route::get('/clients/newclient', 'ClientController@newClient')->name('createClient');
+	Route::post('/clients/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
+
+	Route::get('/jobs', 'JobsController@index')->name('jobs');
+	Route::get('/jobs/{id}', 'JobsController@indexDescription');
+	Route::get('/jobs/newjob', 'JobsController@createJob')->name('createJob');
+	Route::post('/jobs/newjob/post', 'JobsController@createJobPost');
 
 
+	//Parts
 });
 
 Route::prefix('dashboard')->group(function(){
 	//Clients routes
 	Route::get('/', 'DashboardClientController@index')->name('dashboard');
 });
-
-/*
-//Employees
-//Jobs
-Route::get('/dashboard/jobs', 'JobsController@index');
-Route::get('/dashboard/jobs/{id}', 'JobsController@indexDescription');
-Route::get('/dashboard/newjoborder', 'JobsController@jobOrder');
-Route::post('/dashboard/newjoborder/new', 'JobsController@jobOrderPost');
-//Clients
-Route::get('/dashboard/newclient', 'ClientController@client');
-Route::post('/dashboard/newclient/new', 'ClientController@newclient');
-//Parts
-Route::get('/dashboard/newPartOrder', 'DashboardController@partOrder');
-*/

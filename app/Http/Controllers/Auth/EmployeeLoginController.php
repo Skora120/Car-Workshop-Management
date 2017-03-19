@@ -31,9 +31,10 @@ class EmployeeLoginController extends Controller
     	if(Auth::guard('employee')->attempt($credentials, $request->remember)){
 			//if successful, then redirect to thier intended location
 			return redirect()->intended(route('dashboard-employee'));
-    	}
-
-    	//if unsuccessful, then redirect back to the login with the form data, except password
-    	return redirect()->back()->withInput($request->only('username','remember'));
+    	}else{
+        	//if unsuccessful, then redirect back to the login with the form data, except password
+            $errors = ['msg' => "Wrong username or password"];
+        	return redirect()->back()->withErrors($errors)->withInput($request->only('username','remember'));
+        }
     }
 }

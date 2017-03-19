@@ -23,6 +23,11 @@ class DashboardClientController extends Controller
      */
     public function index()
     {
-        return view('dashboard_client');
+        return view('dashboard.dashboard_client');
     }
+
+    // function Cars
+
+
+    // function Orders/Jobs
 }
