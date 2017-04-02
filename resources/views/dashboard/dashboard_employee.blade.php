@@ -10,9 +10,10 @@
                 <div class="panel-body">
                     You are logged in as Employee!
 
-                    <p><a href="{{ url()->current() }}/jobs/newjob">Add new job order</a></p>
+                    <p><a href="{{ url()->current() }}/newjoborder">Add new job order</a></p>
                     <p><a href="{{ url()->current() }}/jobs">Current jobs</a></p>
                     <p><a href="{{ url()->current() }}/clients">Clients</a></p>
+                    <p><a href="{{ url()->current() }}/clients/newclient">Add new client</a></p>
 
                 </div>
             </div>

@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    <p><a href="{{ route('createClient') }}">Add new client</a></p>
+                    <pre>{{print_r($data,true)}}</pre>
 
                     <table class="table table-bordered table-hover">
                         <thead>

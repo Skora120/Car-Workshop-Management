@@ -7,11 +7,6 @@
             <div class="panel-heading">Dashboard</div>
 
             <div class="panel-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
 
                 <pre>{{print_r($data,true)}}</pre>
 

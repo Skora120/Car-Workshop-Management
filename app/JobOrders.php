@@ -16,16 +16,11 @@ class JobOrders extends Model
 
     public function client()
     {
-    	return $this->hasOne('App\User', 'id' ,'client_id');   
+    	return $this->hasOne('App\User', 'id' ,'client_id');
     }
 
     public function car()
     {
     	return $this->hasOne('App\Cars', 'client_id' ,'client_id');
-    }
-
-    public function details()
-    {
-        return $this->hasMany('App\JobDetails', 'joborder_id' ,'id');
     }
 }
