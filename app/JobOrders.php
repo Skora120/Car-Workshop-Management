@@ -26,6 +26,6 @@ class JobOrders extends Model
 
     public function details()
     {
-        return $this->hasMany('App\JobDetails', 'joborder_id' ,'id');
+        return $this->hasMany('App\JobDetails', 'job_id' ,'id');
     }
 }

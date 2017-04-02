@@ -168,7 +168,7 @@ class JobsController extends Controller
     public function OrderDelete(Request $request)
     {   
         /// Delete Order
-        JobDetails::where('joborder_id', $request->id)->delete();
+        JobDetails::where('job_id', $request->id)->delete();
         JobOrders::find($request->id)->delete();
 
         $history = new History;
@@ -189,7 +189,7 @@ class JobsController extends Controller
         $detail = new JobDetails;
 
         $detail->employee_id = Auth::id();
-        $detail->joborder_id = $request->joborder_id;
+        $detail->job_id = $request->joborder_id;
         $detail->description = $request->description;
         $detail->status = $request->status;
 

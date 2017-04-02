@@ -13,7 +13,6 @@
                     </div>
                 @endif
 
-                
                 <pre>{{print_r($data,true)}}</pre>
 
                 <table class="table table-bordered table-hover">

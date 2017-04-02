@@ -18,7 +18,7 @@ class CreateJobdetails extends Migration
             $table->integer('job_id');
             $table->integer('employee_id');
             $table->string('description');
-            $table->tinyInteger('progress');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }
