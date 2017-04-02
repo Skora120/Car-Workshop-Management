@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobsorders extends Migration
+class CreateJobdetails extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateJobsorders extends Migration
      */
     public function up()
     {
-        Schema::create('jobsorders', function (Blueprint $table) {
+        Schema::create('jobdetails', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('job_id');
             $table->integer('employee_id');
-            $table->integer('client_id');
-            $table->integer('car_id');
             $table->string('description');
             $table->tinyInteger('progress');
-            $table->tinyInteger('pirority');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateJobsorders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobsorders');
+        Schema::dropIfExists('jobdetails');
     }
 }

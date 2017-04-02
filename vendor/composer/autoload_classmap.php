@@ -9,6 +9,7 @@ return array(
     'CreateCars' => $baseDir . '/database/migrations/2017_03_04_231007_create_cars.php',
     'CreateEmployeesTable' => $baseDir . '/database/migrations/2017_03_14_210129_create_employees_table.php',
     'CreateHistory' => $baseDir . '/database/migrations/2017_03_18_233059_create_history.php',
+    'CreateJobdetails' => $baseDir . '/database/migrations/2017_03_25_220746_create_jobdetails.php',
     'CreateJobsorders' => $baseDir . '/database/migrations/2017_03_04_231034_create_jobsorders.php',
     'CreateOrderdetails' => $baseDir . '/database/migrations/2017_03_04_231047_create_orderdetails.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
