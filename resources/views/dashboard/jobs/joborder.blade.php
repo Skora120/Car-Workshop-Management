@@ -8,7 +8,14 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
+
+                
                 <details>
                     <summary>Add client form</summary>
                     <form method="POST" action="{{URL::to('dashboard/newclient/new')}}">
@@ -40,7 +47,7 @@
                         <input type="radio" name="clientexist" onclick="existingClient(false)" value="0">No
                     </div>
 
-                    <form method="POST" action="{{ url()->current() }}/new">
+                    <form method="POST" action="{{ url()->current() }}/post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="description">Select Client:</label>
