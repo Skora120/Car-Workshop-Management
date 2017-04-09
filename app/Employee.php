@@ -28,4 +28,9 @@ class Employee extends Authenticatable
     protected $hidden = [
         'password', 'remember_token','level',
     ];
+
+    public function joborders()
+    {
+        return $this->hasMany('App\JobOrders', 'employee_id' ,'id');
+    }
 }

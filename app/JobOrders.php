@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobOrders extends Model
 {
-    public $table = 'jobsorders';
+    public $table = 'joborders';
 
 
     public function employee()
     {
-    	return $this->hasOne('App\User', 'id' ,'employee_id');
+    	return $this->hasOne('App\Employee', 'id' ,'employee_id');
     }
 
     public function client()

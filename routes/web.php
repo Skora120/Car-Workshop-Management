@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -38,11 +39,16 @@ Route::prefix('dashboard-employee')->group(function(){
 	Route::delete('/jobs/{id}/edit/delete', 'JobsController@OrderDelete');
 	Route::put('/jobs/{id}/edit/detailEdit', 'JobsController@DetEditPut');
 	Route::delete('/jobs/{id}/edit/detailDelete', 'JobsController@DetDelete');
-	Route::get('/jobs/{id}', 'JobsController@indexDescription')->name('jobs');
+	Route::get('/jobs/{id}', 'JobsController@indexDescription');
 
 	Route::get('/jobs', 'JobsController@index')->name('jobs');
 
 	//Parts
+	//DOING
+	Route::post('/parts/post', 'PartsController@addPart')->name('part-post');
+	Route::put('/parts/put', 'PartsController@editPart')->name('part-edit');
+	Route::delete('/parts/delete', 'PartsController@deletePart')->name('part-delete');
+	Route::get('/parts', 'PartsController@index')->name('jobs');
 });
 
 Route::prefix('dashboard')->group(function(){

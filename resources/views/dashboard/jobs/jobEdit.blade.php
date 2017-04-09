@@ -120,10 +120,7 @@
                                                 <img id="e{{$value->id}}" class="img-responsive" onClick="editModal($(this).attr('id'))" data-toggle="modal" data-target="#detailEdit" src="{{asset('img/edit.png')}}">
                                             </div>
                                             <div style="width: 45%">
-
-                                                <a id="d{{$value->id}}" onClick="deleteForm($(this).attr('id'))">
-                                                    <img class="img-responsive" src="{{asset('img/delete.png')}}">
-                                                </a>
+                                                <img id="d{{$value->id}}" class="img-responsive" onClick="deleteForm($(this).attr('id'))" src="{{asset('img/delete.png')}}">
                                             </div>
                                         </div>
                                     </td>

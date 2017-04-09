@@ -109,7 +109,7 @@ class JobsController extends Controller
 
         $order = new JobOrders;
 
-        $order->employee_id = Auth::id();
+        $order->employee_id = Auth::guard('employee')->id();
         $order->client_id = $request->client_id;
         $order->car_id = $request->car_id;
         $order->description = $request->description;
@@ -122,7 +122,7 @@ class JobsController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
         $history->description = 'Added new Job with id:' . JobOrders::orderBy('created_at', 'desc')->first()->id;
 
         $history->save();
@@ -146,7 +146,7 @@ class JobsController extends Controller
             'details' => $jobdetails,
         ];
 
-        return view('dashboard.jobs.jobedit', ['data' => $data]);
+        return view('dashboard.jobs.jobEdit', ['data' => $data]);
     }
 
     public function OrderEditPut(Request $request)
@@ -173,7 +173,7 @@ class JobsController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
         $history->description = "Deleted Order with id $request->id";
 
         $history->save();
@@ -188,7 +188,7 @@ class JobsController extends Controller
 
         $detail = new JobDetails;
 
-        $detail->employee_id = Auth::id();
+        $detail->employee_id = Auth::guard('employee')->id();
         $detail->job_id = $request->joborder_id;
         $detail->description = $request->description;
         $detail->status = $request->status;
@@ -199,7 +199,7 @@ class JobsController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
         $history->description = "Added detail with Id: JobDetails::orderBy('created_at', 'desc')->first()->id Description: $request->description Status: $request->status";
 
         $history->save();
@@ -221,7 +221,7 @@ class JobsController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
         $history->description = "Updated detail with Id: $request->id Description: $request->description Status: $request->status";
 
         $history->save();
@@ -236,7 +236,7 @@ class JobsController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
         $history->description = 'Deleted job details with id:' . $request->id;
 
         $history->save();
