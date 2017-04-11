@@ -12,25 +12,22 @@
                         {{ session('success') }}
                     </div>
                 @endif
-
-                <pre>{{print_r($data,true)}}</pre>
-
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th><a id="date" onClick="pagsort($(this));">Date</a></th>
+                            <th><a id="progress" onClick="pagsort($(this));">Status</a></th>
                             <th>Description</th>
                             <th>Employee</th>
                             <th>Client</th>
                             <th>Car</th>                        
-                            <th>Pirority</th>
+                            <th><a id="pirority" onClick="pagsort($(this));">Pirority</a></th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($data as $key => $value)
+                    @foreach($data['data'] as $key => $value)
                         <tr onclick="redir('{{$value['id']}}');">
-                            <td>{{$value['data']}}</td>
+                            <td>{{$value['created_at']}}</td>
                             <td>{{$value['progress']}}</td>
                             <td>{{$value['description']}}</td>
                             <td>{{$value['employee']}}</td>
@@ -41,10 +38,27 @@
                     @endforeach
                     </tbody>
                 </table>
+
+                {{ $pagination->appends(['swhat' => $swhat, 'hsorted' => $show])->links() }}
+
                 <script>
                     function redir(value){
                         window.document.location = "{{ url()->current() }}/"+value;
                     }
+
+                    function pagsort(arg) {
+                        var sTable = "{{ $swhat }}";
+                        var howSort = "{{ $show }}";
+
+                        if(howSort == 'asc'){
+                            howSort = 'desc';
+                        }else{
+                            howSort = 'asc';
+                        }
+
+                        $(arg).attr('href', "{{ url()->current() }}?page=1&swhat="+arg[0].id+"&hsorted="+howSort);
+                    }
+
                 </script>
             </div>
         </div>

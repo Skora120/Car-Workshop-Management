@@ -8,6 +8,9 @@ use App\JobOrders;
 use App\History;
 use App\Employee;
 use App\JobDetails;
+use App\Cars;
+
+use Log;
 
 class JobsController extends Controller
 {
@@ -26,58 +29,73 @@ class JobsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = JobOrders::orderBy('pirority', 'desc')->get();
+        $jobs = JobOrders::orderBy('id', 'desc')->paginate(10);
 
-        $data = [];
+        $scollumn = 'date';
+        if(!$request->hsorted || $request->hsorted != 'desc' && $request->hsorted != 'asc'){
+            $hsorted = 'desc';
+        }else{
+            $hsorted = $request->hsorted;
+        }
+
+        switch($request->swhat){
+            case "date":
+            $scollumn = "date";
+            $jobs = JobOrders::orderBy('id', $hsorted)->paginate(10);
+            break;
+
+            case "progress":
+            $scollumn = "progress";
+            $jobs = JobOrders::orderBy('progress', $hsorted)->paginate(10);
+            break;
+
+            case "pirority":
+            $scollumn = "pirority";
+            $jobs = JobOrders::orderBy('pirority', $hsorted)->paginate(10);
+            break;
+        }
+
+        $jobsArr = $jobs->toArray();
+
+
+        Log::info($request);
+
         foreach ($jobs as $key => $value) {
 
             $carInfo = $value->car()->get();
-            $carInfo = $carInfo[0]->manufacturer." ".$carInfo[0]->model;
+            $jobsArr['data'][$key]['car'] = $carInfo[0]->manufacturer." ".$carInfo[0]->model;
 
-            $employeeInfo = $value->employee()->value('name');
+            $jobsArr['data'][$key]['employee'] = $value->employee()->value('name');
 
-            $clientInfo = $value->client()->value('name');
+            $jobsArr['data'][$key]['client'] = $value->client()->value('name');
 
-            $progress;
             switch ($value->progress) {
                 case 1:
-                    $progress = "In order";
+                    $jobsArr['data'][$key]['progress'] = "In order";
                     break;
                 case 2:
-                    $progress = "In progress";
+                    $jobsArr['data'][$key]['progress'] = "In progress";
                     break;
                 case 3:
-                    $progress = "Done";
+                    $jobsArr['data'][$key]['progress'] = "Done";
                     break;
             }   
 
-            $pirority;
             switch ($value->pirority) {
                 case 1:
-                    $pirority = "Normal";
+                    $jobsArr['data'][$key]['pirority'] = "Normal";
                     break;
                 case 2:
-                    $pirority = "High";
+                    $jobsArr['data'][$key]['pirority'] = "High";
                     break;
                 case 3:
-                    $pirority = "Urgent";
+                    $jobsArr['data'][$key]['pirority'] = "Urgent";
                     break;
             }
-
-            $data[$key] = [
-            'id' => $value->id,
-            'data' => $value->created_at,
-            'progress' => $progress,
-            'description' => $value->description,
-            'employee' => $employeeInfo,
-            'client' => $clientInfo,
-            'car' => $carInfo,
-            'pirority' => $pirority
-            ];
         }
-        return view('dashboard.jobs.jobs', ['data' => $data]);
+        return view('dashboard.jobs.jobs', ['data' => $jobsArr, 'pagination' => $jobs, 'swhat' => $scollumn, 'show' => $hsorted]);
     }
 
     public function indexDescription($id)

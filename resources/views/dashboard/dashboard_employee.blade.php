@@ -11,7 +11,7 @@
                     You are logged in as Employee!
 
                     <p><a href="{{ url()->current() }}/jobs/newjob">Add new job order</a></p>
-                    <p><a href="{{ url()->current() }}/jobs">Current jobs</a></p>
+                    <p><a href="{{ url()->current() }}/jobs?page=1">Current jobs</a></p>
                     <p><a href="{{ url()->current() }}/clients">Clients</a></p>
                     <p><a href="{{ url()->current() }}/clients/newclient">Add new client</a></p>
                     <p><a href="{{ url()->current() }}/parts">Parts</a></p>
