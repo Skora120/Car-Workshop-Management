@@ -25,30 +25,35 @@ Route::post('/employee/login', 'Auth\EmployeeLoginController@login')->name('empl
 Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
+		Route::prefix('clients')->group(function(){
+		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
+		Route::post('/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
+		Route::put('/id/{id}/clientedit', 'ClientController@clientEdit');
+		Route::delete('/id/{id}/clientdel', 'ClientController@clientDelete');
+		Route::get('/id/{id}', 'ClientController@indexDescription');
+		Route::get('/', 'ClientController@index')->name('clients');
+	});
 
-	Route::get('/clients/newclient', 'ClientController@newClient')->name('createClient');
-	Route::post('/clients/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
-	Route::get('/clients', 'ClientController@index')->name('clients');
-	Route::get('/clients/id/{id}', 'ClientController@indexDescription');
-
-	Route::get('/jobs/newjob', 'JobsController@createJob')->name('createJob');
-	Route::post('/jobs/newjob/post', 'JobsController@createJobPost');
-	Route::post('/jobs/{id}/detailAdd', 'JobsController@DetAdd');
-	Route::get('/jobs/{id}/edit', 'JobsController@indexDescEdit');
-	Route::put('/jobs/{id}/edit/put', 'JobsController@OrderEditPut');
-	Route::delete('/jobs/{id}/edit/delete', 'JobsController@OrderDelete');
-	Route::put('/jobs/{id}/edit/detailEdit', 'JobsController@DetEditPut');
-	Route::delete('/jobs/{id}/edit/detailDelete', 'JobsController@DetDelete');
-	Route::get('/jobs/{id}', 'JobsController@indexDescription');
-
-	Route::get('/jobs', 'JobsController@index')->name('jobs');
+	Route::prefix('jobs')->group(function(){
+		Route::get('/newjob', 'JobsController@createJob')->name('createJob');
+		Route::post('/newjob/post', 'JobsController@createJobPost');
+		Route::post('/{id}/detailAdd', 'JobsController@DetAdd');
+		Route::get('/{id}/edit', 'JobsController@indexDescEdit');
+		Route::put('/{id}/edit/put', 'JobsController@OrderEditPut');
+		Route::delete('/{id}/edit/delete', 'JobsController@OrderDelete');
+		Route::put('/{id}/edit/detailEdit', 'JobsController@DetEditPut');
+		Route::delete('/{id}/edit/detailDelete', 'JobsController@DetDelete');
+		Route::get('/{id}', 'JobsController@indexDescription');
+		Route::get('/', 'JobsController@index')->name('jobs');
+	});
 
 	//Parts
-	//DOING
-	Route::post('/parts/post', 'PartsController@addPart')->name('part-post');
-	Route::put('/parts/put', 'PartsController@editPart')->name('part-edit');
-	Route::delete('/parts/delete', 'PartsController@deletePart')->name('part-delete');
-	Route::get('/parts', 'PartsController@index')->name('jobs');
+	Route::prefix('parts')->group(function(){
+		Route::post('/post', 'PartsController@addPart')->name('part-post');
+		Route::put('/put', 'PartsController@editPart')->name('part-edit');
+		Route::delete('/delete', 'PartsController@deletePart')->name('part-delete');
+		Route::get('/', 'PartsController@index')->name('jobs');
+	});
 });
 
 Route::prefix('dashboard')->group(function(){

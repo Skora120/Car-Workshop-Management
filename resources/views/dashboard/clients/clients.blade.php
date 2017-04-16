@@ -8,6 +8,17 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+                     @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    
                     <pre>{{print_r($data,true)}}</pre>
 
                     <table class="table table-bordered table-hover">

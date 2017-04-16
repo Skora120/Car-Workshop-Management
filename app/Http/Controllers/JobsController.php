@@ -30,7 +30,7 @@ class JobsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
         $jobs = JobOrders::orderBy('id', 'desc')->paginate(10);
 
         $scollumn = 'date';
@@ -58,9 +58,6 @@ class JobsController extends Controller
         }
 
         $jobsArr = $jobs->toArray();
-
-
-        Log::info($request);
 
         foreach ($jobs as $key => $value) {
 

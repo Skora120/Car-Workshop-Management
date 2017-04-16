@@ -17,29 +17,11 @@
                     <form method="POST" action="{{url()->current()}}/post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" name="username" value="{{ old('username') }}">
-                            @if($errors->has('username'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('username') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                             @if($errors->has('email'))
                                 <span class="text-danger">
                                     <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="text" class="form-control" name="password" value="{{ old('password') }}">
-                            @if($errors->has('password'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('password') }}</strong>
                                 </span>
                             @endif
                         </div>
