@@ -19,8 +19,6 @@
                         </div>
                     @endif
                     
-                    <pre>{{print_r($data,true)}}</pre>
-
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -43,7 +41,7 @@
                     </table>
                     <script>
                         function redir(value){
-                            window.document.location = "{{ url()->current() }}/id/"+value;
+                            window.document.location = "{{ url()->current() }}/"+value;
                         }
                     </script>
                 </div>

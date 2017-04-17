@@ -21,7 +21,9 @@ class CreateCars extends Migration
             $table->string('engine');
             $table->smallInteger('year');
             $table->integer('client_id');
-            $table->string('vin',17);
+            $table->string('vin', 17);
+            $table->string('number_plates', 10);
+            $table->integer('milage');
             $table->timestamps();
         });
     }

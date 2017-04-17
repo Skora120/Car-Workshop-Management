@@ -8,6 +8,7 @@ use App\Cars;
 use App\User;
 use App\History;
 use App\Employee;
+use App\JobOrders;
 use Hash;
 use Validator;
 use Mail;
@@ -62,7 +63,14 @@ class ClientController extends Controller
 
         $cars = Cars::where('client_id', $id)->get();
 
-        return view('dashboard.clients.client', ['user' => $user, 'cars' => $cars]);
+        $carNames = [];
+        foreach ($cars as $key => $value) {
+            $carNames[$value->id] = $value->manufacturer." ".$value->model;
+        }
+
+        $orders = JobOrders::where('client_id', $id)->orderBy('progress', 'desc')->paginate(15);
+
+        return view('dashboard.clients.client', ['user' => $user, 'cars' => $cars, 'orders' => $orders, 'carsNames' => $carNames]);
     }
 
     public function newClient()
@@ -74,7 +82,7 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:255|unique:users',
-            'phone_number' => 'required|max:11'
+            'phone_number' => 'integer|required|digits_between:9,11'
         ]);
 
         if($validator->fails()){
@@ -129,6 +137,20 @@ class ClientController extends Controller
     public function clientEdit(Request $request)
     {
         $user = User::find($request->id);
+
+
+        if($user->email === $request->email){
+            $this->validate($request, [
+                'name' => 'string|required|max:255',
+                'phone' => 'numeric|required|digits_between:9,11',
+            ]);
+        }else{
+            $this->validate($request, [
+                'name' => 'string|required|max:255',
+                'phone' => 'numeric|required|max:11',
+                'email' => 'unique:users|email|required|digits_between:9,11',
+            ]);
+        }
 
         $user->name = $request->name;
         $user->phone_number = $request->phone;

@@ -25,13 +25,23 @@ Route::post('/employee/login', 'Auth\EmployeeLoginController@login')->name('empl
 Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
-		Route::prefix('clients')->group(function(){
+
+	Route::prefix('clients')->group(function(){
 		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
 		Route::post('/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
-		Route::put('/id/{id}/clientedit', 'ClientController@clientEdit');
-		Route::delete('/id/{id}/clientdel', 'ClientController@clientDelete');
-		Route::get('/id/{id}', 'ClientController@indexDescription');
+		Route::put('/{id}/clientedit', 'ClientController@clientEdit');
+		Route::delete('/{id}/clientdel', 'ClientController@clientDelete');
+		Route::post('/{id}/caradd', 'CarsController@carAdd');
+		Route::get('/{id}', 'ClientController@indexDescription')->name('client');
 		Route::get('/', 'ClientController@index')->name('clients');
+	});
+
+	Route::prefix('cars')->group(function(){
+		Route::delete('/{id}/edit/delete', 'CarsController@carDelete');
+		Route::put('/{id}/edit/put', 'CarsController@carEditPut');
+		Route::get('/{id}/edit', 'CarsController@carEdit');
+		Route::get('/{id}', 'CarsController@indexDescription');
+		Route::get('/', 'CarsController@index')->name('cars');
 	});
 
 	Route::prefix('jobs')->group(function(){
@@ -52,7 +62,7 @@ Route::prefix('dashboard-employee')->group(function(){
 		Route::post('/post', 'PartsController@addPart')->name('part-post');
 		Route::put('/put', 'PartsController@editPart')->name('part-edit');
 		Route::delete('/delete', 'PartsController@deletePart')->name('part-delete');
-		Route::get('/', 'PartsController@index')->name('jobs');
+		Route::get('/', 'PartsController@index')->name('parts');
 	});
 });
 
