@@ -140,6 +140,12 @@ class CarsController extends Controller
 
     public function carDelete(Request $request)
     {
+        //Check level
+        $employeelevel = Employee::find(Auth::guard('employee')->id())->value('level');
+        if($employeelevel < 4){
+            return back()->with('error', "You don't have permissions!");
+        }
+
         $car = Cars::find($request->id);
         $client_id = $car->client_id;
         $car->delete();

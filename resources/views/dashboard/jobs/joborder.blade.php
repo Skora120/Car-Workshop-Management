@@ -12,50 +12,6 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                <details>
-                    <summary>Add client form</summary>
-                    <form method="POST" action="{{URL::to('dashboard/newclient/new')}}">
-                        <div class="form-group">
-                            <label for="login">Login:</label>
-                            <input type="text" class="form-control" name="login">
-                            @if($errors->has('login'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('login') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="text" class="form-control" name="passsword">
-                            @if($errors->has('passsword'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('passsword') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" name="name">
-                            @if($errors->has('name'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone number:</label>
-                            <input type="tel" class="form-control" name="phone_number">
-                            @if($errors->has('phone_number'))
-                                <span class="text-danger">
-                                    <strong>{{ $errors->first('phone_number') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-
-                    </form>
-                </details>
-
-                    <hr>
 
                     <div>
                         <label for="description">Client Exists?</label>

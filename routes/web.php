@@ -26,6 +26,10 @@ Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
 
+	Route::get('/settings', 'DashboardEmployeeController@settings');
+	Route::put('/settings/password/put', 'DashboardEmployeeController@settingsPasswordSave');
+	Route::put('/settings/phone/put', 'DashboardEmployeeController@settingsPhoneSave');
+
 	Route::prefix('clients')->group(function(){
 		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
 		Route::post('/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
@@ -34,6 +38,15 @@ Route::prefix('dashboard-employee')->group(function(){
 		Route::post('/{id}/caradd', 'CarsController@carAdd');
 		Route::get('/{id}', 'ClientController@indexDescription')->name('client');
 		Route::get('/', 'ClientController@index')->name('clients');
+	});
+
+	Route::prefix('employees')->group(function(){
+		Route::get('/', 'EmployeesController@index')->name('employees');
+		Route::post('/post', 'EmployeesController@employeeAdd');
+		Route::put('/{id}/put', 'EmployeesController@employeeEdit');
+		Route::delete('/{id}/delete', 'EmployeesController@employeeDelete');
+		Route::get('/{id}', 'EmployeesController@indexDescription')->name('employee');
+
 	});
 
 	Route::prefix('cars')->group(function(){
@@ -53,7 +66,7 @@ Route::prefix('dashboard-employee')->group(function(){
 		Route::delete('/{id}/edit/delete', 'JobsController@OrderDelete');
 		Route::put('/{id}/edit/detailEdit', 'JobsController@DetEditPut');
 		Route::delete('/{id}/edit/detailDelete', 'JobsController@DetDelete');
-		Route::get('/{id}', 'JobsController@indexDescription');
+		Route::get('/{id}', 'JobsController@indexDescription')->name('job');
 		Route::get('/', 'JobsController@index')->name('jobs');
 	});
 
@@ -69,4 +82,6 @@ Route::prefix('dashboard-employee')->group(function(){
 Route::prefix('dashboard')->group(function(){
 	//Clients routes
 	Route::get('/', 'DashboardClientController@index')->name('dashboard');
+
+
 });

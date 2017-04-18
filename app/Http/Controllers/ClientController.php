@@ -131,7 +131,8 @@ class ClientController extends Controller
 
         $history->save();
 
-        return back()->with('success', "New client added");
+
+        return redirect()->route('client', ['id' => $user->id])->with('success', "New client added");
     }
     //client update
     public function clientEdit(Request $request)
@@ -148,7 +149,7 @@ class ClientController extends Controller
             $this->validate($request, [
                 'name' => 'string|required|max:255',
                 'phone' => 'numeric|required|max:11',
-                'email' => 'unique:users|email|required|digits_between:9,11',
+                'email' => 'unique:users|email|required',
             ]);
         }
 

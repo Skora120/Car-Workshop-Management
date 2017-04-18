@@ -15,7 +15,10 @@
                     <p><a href="{{ url()->current() }}/clients">Clients</a></p>
                     <p><a href="{{ url()->current() }}/clients/newclient">Add new client</a></p>
                     <p><a href="{{ url()->current() }}/parts">Parts</a></p>
-
+                    @if ($level > 5)
+                    <p><a href="{{ url()->current() }}/employees">Employees Management</a></p>
+                    <p><a href="{{ url()->current() }}/#">History</a></p>
+                    @endif
                 </div>
             </div>
         </div>

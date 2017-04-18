@@ -142,7 +142,7 @@ class JobsController extends Controller
 
         $history->save();
 
-        return back()->with('success', "New order added");
+        return redirect()->route('job', ['id' => $order->id])->with('success', "New order added");
     }
 
     public function indexDescEdit($id)

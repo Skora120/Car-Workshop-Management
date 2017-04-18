@@ -121,7 +121,7 @@
         </div>
       </div>
     </div>
-    <!-- End of deleteModal -->
+    <!-- End of addModal -->
 
     <!-- Delete Modal  https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
     <div id="deleteModal" class="modal fade" role="dialog">
