@@ -30,22 +30,10 @@ class PartsController extends Controller
      */
 	public function index()
 	{	
-		$result = Parts::get();
+		$result = Parts::paginate(20);
 
-		$data = [];
-		foreach ($result as $key => $value) {
-			$employee = User::find($value['employee_id'])->value('name');
 
-			$data[$key] = [
-				'id' => $value->id,
-				'description' => $value->description,
-				'shortinfo' => $value->shortinfo,
-				'amount' => $value->amount,
-				'employee' => $employee,
-				'part_number' => $value->part_number,
-			];
-		}
-		return view('dashboard.parts.parts', ['data' => $data]);
+		return view('dashboard.parts.parts', ['data' => $result]);
 	}
 
 	public function addPart(Request $request)

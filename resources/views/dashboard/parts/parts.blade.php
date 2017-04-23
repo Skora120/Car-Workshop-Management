@@ -24,7 +24,6 @@
                             <th>Description</th> 
                             <th>For</th>  
                             <th>Amount</th>
-                            <th>Employee</th>
                             <th>Part Number</th>
                             <th>Manage</th>
                         
@@ -37,7 +36,6 @@
                             <td id="desc{{$value['id']}}">{{$value['description']}}</td>
                             <td id="shortinfo{{$value['id']}}">{{$value['shortinfo']}}</td>
                             <td id="amount{{$value['id']}}">{{$value['amount']}}</td>
-                            <td>{{$value['employee']}}</td>
                             <td id="part{{$value['id']}}">{{$value['part_number']}}</td>
                             <td style="width:20%">
                                 <div style="display:flex;">
@@ -53,6 +51,8 @@
                     @endforeach
                     </tbody>
                 </table>
+
+                {{ $data->links() }}
 
                 <script>
                     function deleteModal(arg) {

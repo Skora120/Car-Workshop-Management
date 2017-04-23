@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta id="csrf_token" name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -53,7 +53,10 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <div>
+                            <input id="searchEngineLink" type="hidden"value="{{ url()->route('search') }}">
+                            <input id="searchEngine" type="text" name="query">
+                        </div>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -93,5 +96,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/search.js') }}"></script>
 </body>
 </html>

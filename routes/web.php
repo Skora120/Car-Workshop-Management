@@ -30,6 +30,9 @@ Route::prefix('dashboard-employee')->group(function(){
 	Route::put('/settings/password/put', 'DashboardEmployeeController@settingsPasswordSave');
 	Route::put('/settings/phone/put', 'DashboardEmployeeController@settingsPhoneSave');
 
+	Route::get('/search', 'SearchEngineController@search')->name('search');
+	Route::get('/search/{id}', 'SearchEngineController@searchSideBar');
+
 	Route::prefix('clients')->group(function(){
 		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
 		Route::post('/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
