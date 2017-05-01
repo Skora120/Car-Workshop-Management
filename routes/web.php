@@ -35,6 +35,9 @@ Route::prefix('dashboard-employee')->group(function(){
 
 	Route::prefix('clients')->group(function(){
 		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
+		Route::get('/client/searchAjax', 'ClientController@searchAjax')->name('clientSearchAjax');
+		Route::get('/client/carsAjax', 'ClientController@carsAjax')->name('clientCarsAjax');
+		Route::post('/newClientAjax', 'ClientController@newClientAjax')->name('createClientAjax');
 		Route::post('/newclient/post', 'ClientController@newClientPost')->name('createClientPost');
 		Route::put('/{id}/clientedit', 'ClientController@clientEdit');
 		Route::delete('/{id}/clientdel', 'ClientController@clientDelete');
@@ -62,7 +65,7 @@ Route::prefix('dashboard-employee')->group(function(){
 
 	Route::prefix('jobs')->group(function(){
 		Route::get('/newjob', 'JobsController@createJob')->name('createJob');
-		Route::post('/newjob/post', 'JobsController@createJobPost');
+		Route::post('/newjob', 'JobsController@createJobAjax')->name('createJobAjax');
 		Route::post('/{id}/detailAdd', 'JobsController@DetAdd');
 		Route::get('/{id}/edit', 'JobsController@indexDescEdit');
 		Route::put('/{id}/edit/put', 'JobsController@OrderEditPut');

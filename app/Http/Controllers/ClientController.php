@@ -73,9 +73,124 @@ class ClientController extends Controller
         return view('dashboard.clients.client', ['user' => $user, 'cars' => $cars, 'orders' => $orders, 'carsNames' => $carNames]);
     }
 
+    public function searchAjax(Request $request)
+    {
+        if($request->ajax()){
+            $result = User::where('name', 'like', "%$request->search%")->limit(4)->get();
+
+            $data = [];
+            foreach ($result as $key => $value) {
+                $cars = Cars::where('client_id', $value->id)->get();
+                $carsCount = count($cars);
+                $tempArray = [
+                    'client_id' => $value->id,
+                    'name' => $value->name,
+                    'carsCount' => $carsCount,
+                    'cars' => $cars
+                ];
+                array_push($data, $tempArray);
+            }
+            return Response($data);
+        }
+    }
+
     public function newClient()
     {
         return view('dashboard.clients.newclient');
+    }
+
+    public function newClientAjax(Request $request)
+    {
+        if($request->ajax()){
+            $this->validate($request, [
+                'email' => 'required|email|max:255|unique:users',
+                'name' => 'string|required|max:255',
+                'phone_number' => 'numeric|required|digits_between:9,11',
+                'manufacturer' => 'required|max:255',
+                'model' => 'required|max:255',
+                'color' => 'required|max:255',
+                'engine' => 'required|max:255',
+                'vin' => 'required|max:17',
+                'year' => 'required|integer|digits:4',
+                'number_plates' => 'required|max:10',
+                'milage' => 'required|integer'
+            ]);
+
+            //Customer Creating Process
+
+            $username = 'k' . str_random(5);
+
+            if(User::where('username', $username)->first()){
+                $username = 'k' . str_random(8);
+            }
+
+            $password = str_random(8);
+            $passwordhash = Hash::make($password);
+
+            $user = new User;
+
+            $user->username = $username;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = $passwordhash;
+            $user->phone_number = $request->phone_number;
+
+            $user->save();
+
+
+            //send mail
+            $requestMail = $request->email;
+
+            $title = "Credentials";
+            $contentLogin = $username;
+            $contentPassword = $password;
+
+            Mail::send('emails.credentials', ['title' => $title, 'login' => $contentLogin, 'password' => $contentPassword], function ($message) use ($requestMail){
+                $message->from('me@gmail.com', 'Application');
+
+                $message->to($requestMail);
+            });
+
+            //Car Adding Process
+            $customerId = User::where('username', $username)->value('id');
+
+            $car = new Cars;
+
+            $car->manufacturer = $request->manufacturer;
+            $car->model = $request->model;
+            $car->color = $request->color;
+            $car->engine = $request->engine;
+            $car->year = $request->year;
+            $car->client_id = $customerId;
+            $car->vin = $request->vin;
+            $car->number_plates = $request->number_plates;
+            $car->milage =  $request->milage;
+
+            $car->save();
+
+
+            //HistoryLog
+
+            $history = new History;
+
+            $history->username = Employee::find(Auth::guard('employee')->id())->value('name');
+            $history->description = 'Added customer with name: ' . $request->name;
+
+            $history->save();
+
+            //Response
+            $carId = Cars::where('client_id', $customerId)->where('manufacturer', $request->manufacturer)->where('number_plates', $request->number_plates)->value('id');
+
+            $output = [
+                'clientId' => $customerId,
+                'name' => $request->name,
+                'carId' => $carId,
+                'manufacturer' => $request->manufacturer,
+                'model' => $request->model
+            ];
+            
+            return Response($output);
+        }
     }
 
     public function newClientPost(Request $request)
@@ -126,7 +241,7 @@ class ClientController extends Controller
 
         $history = new History;
 
-        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
+        $history->username = Employee::find(Auth::guard('employee')->id())->value('name');
         $history->description = 'Added customer with name: ' . $request->name;
 
         $history->save();
@@ -196,6 +311,14 @@ class ClientController extends Controller
         $history->save();
 
         return redirect()->route('clients')->with('success', "Customer deleted!");
+    }
+
+    public function carsAjax(Request $request)
+    {
+        if($request->ajax()){
+            $data = User::find($request->client_id)->cars()->get();
+            return Response($data);
+        }
     }
 }
     

@@ -113,36 +113,36 @@ class JobsController extends Controller
         return view('dashboard.jobs.joborder');
     }
 
-    public function createJobPost(Request $request)
+    public function createJobAjax(Request $request)
     {
-        $this->validate($request, [
-            'client_id' => 'required',
-            'car_id' => 'required',
-            'pirority' => 'required',
-            'description' => 'min:8',
-        ]);
+        if($request->ajax()){
+            $this->validate($request, [
+                'description' => 'required|max:255',
+            ]);
 
-        $order = new JobOrders;
+            $order = new JobOrders;
 
-        $order->employee_id = Auth::guard('employee')->id();
-        $order->client_id = $request->client_id;
-        $order->car_id = $request->car_id;
-        $order->description = $request->description;
-        $order->progress = 1;
-        $order->pirority = $request->pirority;
+            $order->employee_id = Auth::guard('employee')->id();
+            $order->client_id = $request->client_id;
+            $order->car_id = $request->car_id;
+            $order->description = $request->description;
+            $order->progress = 1;
+            $order->pirority = $request->pirority;
 
-        $order->save();
+            $order->save();
 
-        // HistoryLog
+            // HistoryLog
+            $oredrId = JobOrders::orderBy('id', 'desc')->first()->id;
 
-        $history = new History;
+            $history = new History;
 
-        $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
-        $history->description = 'Added new Job with id:' . JobOrders::orderBy('created_at', 'desc')->first()->id;
+            $history->username = Employee::find(Auth::guard('employee')->id())->value('name');
+            $history->description = 'Added new Job with id:' . $oredrId;
 
-        $history->save();
+            $history->save();
 
-        return redirect()->route('job', ['id' => $order->id])->with('success', "New order added");
+            return Response($oredrId);
+        }
     }
 
     public function indexDescEdit($id)
