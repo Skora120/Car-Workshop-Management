@@ -85,10 +85,10 @@
                     {{ $orders->links() }}
                     <script>
                         function redirc(value){
-                            window.document.location = "{{ url()->route('cars') }}/"+value;
+                            window.location.href = "{{ url()->route('cars') }}/"+value;
                         }
                         function redirj(value){
-                            window.document.location = "{{ url()->route('jobs') }}/"+value;
+                            window.location.href = "{{ url()->route('jobs') }}/"+value;
                         }
                     </script>
                 </div>

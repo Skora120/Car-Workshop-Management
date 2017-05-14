@@ -1,4 +1,3 @@
-
 <?php
 
 /*
@@ -26,12 +25,19 @@ Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
 
+	Route::get('/history', 'HistoryController@index')->name('history');
+
 	Route::get('/settings', 'DashboardEmployeeController@settings');
 	Route::put('/settings/password/put', 'DashboardEmployeeController@settingsPasswordSave');
 	Route::put('/settings/phone/put', 'DashboardEmployeeController@settingsPhoneSave');
 
 	Route::get('/search', 'SearchEngineController@search')->name('search');
+	Route::get('/search/partAjax', 'SearchEngineController@searchPartAjax')->name('searchPartAjax');
+	Route::get('/search/part/{str}', 'SearchEngineController@searchPart')->name('searchPart');
+	Route::get('/search/clientAjax', 'SearchEngineController@searchClientAjax')->name('searchClientAjax');
+	Route::get('/search/client/{str}', 'SearchEngineController@searchClient')->name('searchClient');
 	Route::get('/search/{id}', 'SearchEngineController@searchSideBar');
+
 
 	Route::prefix('clients')->group(function(){
 		Route::get('/newclient', 'ClientController@newClient')->name('createClient');
@@ -78,10 +84,12 @@ Route::prefix('dashboard-employee')->group(function(){
 
 	//Parts
 	Route::prefix('parts')->group(function(){
+		Route::get('/{id}', 'PartsController@indexDescription')->name('part');
 		Route::post('/post', 'PartsController@addPart')->name('part-post');
-		Route::put('/put', 'PartsController@editPart')->name('part-edit');
-		Route::delete('/delete', 'PartsController@deletePart')->name('part-delete');
+		Route::put('/{id}/put', 'PartsController@editPart')->name('part-edit');
+		Route::delete('/{id}/delete', 'PartsController@deletePart')->name('part-delete');
 		Route::get('/', 'PartsController@index')->name('parts');
+
 	});
 });
 

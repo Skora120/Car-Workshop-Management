@@ -93,18 +93,20 @@ class EmployeesController extends Controller
     {
         $user = Employee::find($request->id);
 
+        $maxlevel = Employee::find(Auth::guard('employee')->id())->value('level');
+
         if($user->email === $request->email){
             $this->validate($request, [
                 'name' => 'string|required|max:255',
                 'phone_number' => 'numeric|required|digits_between:9,11',
-                'level' => 'numeric|required|max:7',
+                'level' => 'numeric|required|max:'.$maxlevel,
             ]);
         }else{
             $this->validate($request, [
                 'name' => 'string|required|max:255',
                 'email' => 'unique:users|email|required',
                 'phone_number' => 'numeric|required|digits_between:9,11',
-                'level' => 'numeric|required|max:7',
+                'level' => 'numeric|required|max:'.$maxlevel,
             ]);
         }
 

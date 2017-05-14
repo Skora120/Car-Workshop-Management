@@ -31,13 +31,28 @@ class PartsController extends Controller
 	public function index()
 	{	
 		$result = Parts::paginate(20);
-
-
 		return view('dashboard.parts.parts', ['data' => $result]);
 	}
 
+	public function indexDescription($id)
+	{	
+		$result = Parts::where('id', $id)->get();
+		if(empty($result[0])){
+			return redirect()->route('parts')->with('error', "Part doesn't exist");
+		}
+		return view('dashboard.parts.part', ['data' => $result]);
+	}
+
+
 	public function addPart(Request $request)
 	{
+        $this->validate($request, [
+            'description' => 'required|max:255',
+            'amount' => 'required|max:255',
+            'part_number' => 'required|max:255',
+            'shortinfo' => 'required|max:255',
+        ]);
+
 		$employee_id = Auth::guard('employee')->id();
 
 		$data = new Parts;
@@ -62,6 +77,13 @@ class PartsController extends Controller
 
 	public function editPart(Request $request)
 	{
+        $this->validate($request, [
+            'description' => 'required|max:255',
+            'amount' => 'required|max:255',
+            'part_number' => 'required|max:255',
+            'shortinfo' => 'required|max:255',
+        ]);
+
 		$employee_id = Auth::guard('employee')->id();
 		$data = Parts::find($request->id);
 
@@ -92,11 +114,11 @@ class PartsController extends Controller
 
 		$history = new History;
 
-        $history->username = Employee::find($employee_id)->value('username');
+        $history->username = Employee::find($employee_id)->value('name');
         $history->description = 'Deleted part with id: ' . $request->id . ' information:' . $data->description . ' , ' . $data->shortinfo;
 
         $history->save();
 
-        return back()->with('success', "Part deleted successful");
+        return redirect()->route('parts')->with('success', "Part deleted successful");
 	}
 }

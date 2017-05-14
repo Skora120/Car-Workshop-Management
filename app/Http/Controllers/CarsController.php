@@ -31,7 +31,8 @@ class CarsController extends Controller
      */
     public function index()
     {
-    	return view('dashboard.cars.cars');
+        $cars = Cars::paginate(25);
+        return view('dashboard.cars.cars', ['pagination' => $cars]);
     }
 
     public function indexDescription($id)

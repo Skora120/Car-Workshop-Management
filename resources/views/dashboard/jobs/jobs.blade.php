@@ -43,7 +43,7 @@
 
                 <script>
                     function redir(value){
-                        window.document.location = "{{ url()->current() }}/"+value;
+                        window.location.href = "{{ url()->current() }}/"+value;
                     }
 
                     function pagsort(arg) {

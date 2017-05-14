@@ -136,7 +136,7 @@ class JobsController extends Controller
 
             $history = new History;
 
-            $history->username = Employee::find(Auth::guard('employee')->id())->value('name');
+            $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
             $history->description = 'Added new Job with id:' . $oredrId;
 
             $history->save();
@@ -215,7 +215,7 @@ class JobsController extends Controller
         $history = new History;
 
         $history->username = Employee::find(Auth::guard('employee')->id())->value('username');
-        $history->description = "Added detail with Id: JobDetails::orderBy('created_at', 'desc')->first()->id Description: $request->description Status: $request->status";
+        $history->description = "Added detail with Id: " . JobDetails::orderBy('created_at', 'desc')->first()->id . " Description:" . $request->description .  " Status: " . $request->status;
 
         $history->save();
 

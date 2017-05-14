@@ -17,8 +17,8 @@ class CreatePart extends Migration
             $table->increments('id');
             $table->integer('employee_id');
             $table->string('description');
-            $table->integer('amount');
-            $table->integer('part_number');
+            $table->string('amount');
+            $table->string('part_number');
             $table->string('shortinfo');
             $table->timestamps();
         });

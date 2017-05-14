@@ -10,13 +10,30 @@
             </div>
 
             <div class="panel-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    @if (session('errors'))
+                        <div class="alert alert-danger">
+                        @foreach($errors->all() as $value)
+                                <p>{{ $value }}</p>
+                        @endforeach
+                        </div>
+                    @endif
 
-                <pre>{{print_r($data,true)}}</pre>
+                <div class='row'>
+                    <div class="col-md-12">
+                            <input id="searchPart" class="form-control" type="text" placeholder="Type part car/description/part number">
+                            <div id="searchPartList" class="list-group above"></div>
+                    </div>
+                </div>
 
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -24,29 +41,16 @@
                             <th>Description</th> 
                             <th>For</th>  
                             <th>Amount</th>
-                            <th>Part Number</th>
-                            <th>Manage</th>
-                        
-                                           
+                            <th>Part Number</th>              
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($data as $key => $value)
-                        <tr>
-                            <td id="desc{{$value['id']}}">{{$value['description']}}</td>
-                            <td id="shortinfo{{$value['id']}}">{{$value['shortinfo']}}</td>
-                            <td id="amount{{$value['id']}}">{{$value['amount']}}</td>
-                            <td id="part{{$value['id']}}">{{$value['part_number']}}</td>
-                            <td style="width:20%">
-                                <div style="display:flex;">
-                                    <div style="width: 55%">
-                                        <img id="e{{$value['id']}}" class="img-responsive" onClick="editModal($(this).attr('id'))" data-toggle="modal" data-target="#editmodal" src="{{asset('img/edit.png')}}">
-                                    </div>
-                                    <div style="width: 45%">
-                                        <img id="d{{$value['id']}}" class="img-responsive" onClick="deleteModal($(this).attr('id'))" data-toggle="modal" data-target="#deleteModal" src="{{asset('img/delete.png')}}">
-                                    </div>
-                                </div>
-                            </th>
+                        <tr onclick="redir('{{ $value['id'] }}');">
+                            <td>{{$value['description']}}</td>
+                            <td>{{$value['shortinfo']}}</td>
+                            <td>{{$value['amount']}}</td>
+                            <td>{{$value['part_number']}}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -55,27 +59,81 @@
                 {{ $data->links() }}
 
                 <script>
-                    function deleteModal(arg) {
-                        var id = arg.slice(1);
-                        var description = $('#desc'+id).text();
-                        var shortinfo = $('#shortinfo'+id).text();
-                        $('#iddelete').val(id);
-                        $('#shortinfodelete').val(shortinfo);
-                        $('#descriptiondelete').val(description);
+                    $('#searchPart').keyup(function (e) {
+                        var str = $(this).val();
+                        if(str.length >= 3){
+                            getPartsInformation(str);                                
+                        }
+                        if(str.length === 0){
+                            $('#searchPartList').html('');
+                        }
+                        if(e.keyCode === 13){
+                            window.location.href = "{{ url('/') }}/dashboard-employee/search/part/"+str;
+                        }
+                    });
+
+                function appendInfromation(arg) {
+                        $('#searchPartList').html('');
+                        if(arg.length > 0){
+                            for(var i = 0;i < arg.length; i++){
+                                var description = arg[i].description;
+                                if(description.length>30){
+                                    description = description.substr(0,30)+"...";
+                                }
+                                var id = arg[i].id;
+
+                                var item = "<a class='list-group-item list-group-item-action above-list-search' onClick='redir("+id+")'>"
+                                    +"<div class='row '>"
+                                        +"<div class='col-md-8 pull-left'>"
+                                            +"<strong>"
+                                                +"Description: "+description
+                                            +"</strong>"
+                                        +"</div>"
+                                        +"<div class='col-md-4 pull-right'>"
+                                            +"For: "+arg[i].shortinfo
+                                        +"</div>"
+                                    +"</div>"
+                                        +"<div class='columns-12 row'>"
+                                            +"<div class='col-md-8 pull-left'>Part Number:"
+                                                +arg[i].part_number
+                                            +"</div>"
+                                        +"<div class='col-md-4 pull-right'>Amount: "
+                                            +arg[i].amount
+                                        +"</div>"
+                                    +"</div>"
+                                +"</a>";
+
+                                $( "#searchPartList" ).append(item).hide().slideDown();     
+                            }
+                        }else{
+                            var item = "<div class='list-group-item list-group-item-action above'>"+"Not Found"+"<div class='columns-4'>"+"</div>"+"</div>";
+                            $( "#searchPartList" ).append(item).hide().slideDown();  
+                        }
                     }
 
-                    function editModal(arg) {
-                        var id = arg.slice(1);
-                        var description = $('#desc'+id).text();
-                        var shortinfo = $('#shortinfo'+id).text();
-                        var amount = $('#amount'+id).text();
-                        var part = $('#part'+id).text();
-                        $('#idedit').val(id);
-                        $('#shortinfoedit').val(shortinfo);
-                        $('#descriptionedit').val(description);
-                        $('#amountedit').val(amount);
-                        $('#numberedit').val(part);
+
+                    function getPartsInformation(arg) {
+                        var link = "{{ route('searchPartAjax') }}";
+                        $.ajax({
+                            type : 'GET',
+                            url : link,
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'))
+                            },
+                            data : {'search' : arg},
+                            success:function(data){
+                              console.log(data);
+                              appendInfromation(data);
+                            },
+                            error: function(data){
+                                console.log(data);
+                            }
+                        });
                     }
+
+                    function redir(value){
+                        window.location.href = "{{ url()->route('parts') }}/"+value;
+                    }   
                 </script>
             </div>
         </div>
@@ -92,7 +150,7 @@
             <h4 class="modal-title">Part Delete</h4>
           </div>
           <div class="modal-body">
-            <form id="editModal" method="POST" action="{{ url()->current()}}/post">
+            <form method="POST" action="{{ route('part-post') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label for="description">Description</label> 
@@ -122,91 +180,5 @@
       </div>
     </div>
     <!-- End of addModal -->
-
-    <!-- Delete Modal  https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
-    <div id="deleteModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Part Delete</h4>
-          </div>
-          <div class="modal-body">
-            <form id="deleteModalForm" method="POST" action="{{ url()->current()}}/delete">
-                <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input id="iddelete" type="hidden" name="id">
-                <div class="form-group">
-                    <label for="description">Description</label> 
-                    <textarea id="descriptiondelete" disabled="true" rows="4" class="form-control" name="description">asd</textarea>            
-                </div>
-                <div class="form-group">
-                    <label for="shortinfo">For</label> 
-                    <input id="shortinfodelete" disabled="true" type="text" name="shortinfo" class="form-control">
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" onClick="$(this).submit(function(e){e.preventDefault();
-});" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of deleteModal -->
-
-
-    <!-- Edit Modal  https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
-    <div id="editmodal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Part Edit</h4>
-          </div>
-          <div class="modal-body">
-            <form id="editModal" method="POST" action="{{ url()->current()}}/put">
-                <input type="hidden" name="_method" value="put">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input id="idedit" type="hidden" name="id">
-                <div class="form-group">
-                    <label for="description">Description</label> 
-                    <textarea id="descriptionedit" rows="4" class="form-control" name="description">asd</textarea>            
-                </div>
-                <div class="form-group">
-                    <label for="for">For</label> 
-                    <input id="shortinfoedit" type="text" name="shortinfo" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label> 
-                    <input id="amountedit" type="number" name="amount" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="part number">Part Number</label> 
-                    <input id="numberedit" type="text" name="part_number" class="form-control">
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" onClick="$(this).submit(function(e){e.preventDefault();
-});" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of editModal -->
-
-
-
-
-
 </div>
 @endsection

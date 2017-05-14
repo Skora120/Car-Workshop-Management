@@ -9,6 +9,10 @@
 
                 <div class="panel-body">
                     You are logged in as Client.
+
+                    <pre>{{ print_r($user,true) }}</pre>
+                    <pre>{{ print_r($cars,true) }}</pre>
+                    <pre>{{ print_r($carsCount,true) }}</pre>
                 </div>
             </div>
         </div>

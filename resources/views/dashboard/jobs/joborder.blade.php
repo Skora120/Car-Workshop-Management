@@ -136,14 +136,15 @@
                     <!-- Add Order Ajax "form" to existing Client -->
                     <!-- add hide class -->
                     <div id="addOrderExistClient" class="hide"> 
-                        <div class="col-md-12">
+                        <div id="searchClientDiv" class="col-md-12">
                             <input id="searchClientInput" class="form-control" type="text" placeholder="Type customer name">
                         </div>
+
                       <div class="col-md-12">
                         <div id="searchCustomer" class="list-group above"></div>
                       </div>
+
                       <div>
-                      </div>
                           <div id="inputNewOrder" class="hide">
                             <p>Create new Job Order</p>
                             <input id="aoeClientId" type="hidden">
@@ -192,8 +193,6 @@
                         }
 
                         function clientExistsList(arg) {
-                            console.log(arg);
-                            console.log(arg.length);
                             $('#searchCustomer').html('');
                             if(arg.length > 0){
                                 for(var i = 0;i < arg.length; i++){
@@ -221,7 +220,7 @@
                                         }
                                     }
 
-                                    var item = "<a id='ex"+arg[i].client_id+"' class='list-group-item list-group-item-action above' onClick='appendExistingInformation($(this))'>"
+                                    var item = "<a id='ex"+arg[i].client_id+"' class='list-group-item list-group-item-action above-list-search' onClick='appendExistingInformation($(this))'>"
                                         +"<div class='columns-12'>"
                                         +"<div class='col-md-8 pull-left'><strong>"
                                         +arg[i].name
@@ -244,6 +243,7 @@
                         }
 
                         function appendExistingInformation(arg) {
+                            $("#searchClientDiv").hide()
                             var client_id = arg[0].id;
                             client_id = client_id.slice(2);
                             var client_name = arg.children().children()[0].innerHTML;
@@ -266,14 +266,12 @@
                                 error: function(data){
                                     $("#CustomerAddButton").attr("disabled", false);
                                     var errors = data.responseJSON;
-                                    console.log(errors);
                                 }
                             });
                             $('#inputNewOrder').removeClass('hide');
                         }
 
                         function fillSelectInformation(arg) {
-                            console.log(arg);
                             for(var i = 0; i < arg.length; i++){
                                 var select = "<option value='"+arg[i].id+"'>"+arg[i].manufacturer+" "+arg[i].model+" "+arg[i].number_plates+"</option>"
                                 $('#aoeCar').append(select);
@@ -296,12 +294,11 @@
                                 },
                                 data : information,
                                 success:function(data){
-                                    window.location.replace("{{ url('/') }}/dashboard-employee/jobs/"+data);
+                                    window.location.href = "{{ url('/') }}/dashboard-employee/jobs/"+data;
                                 },
                                 error: function(data){
                                     $("#CustomerAddButton").attr("disabled", false);
                                     var errors = data.responseJSON;
-                                    console.log(errors);
                                 }
                             });
                         }
@@ -314,7 +311,6 @@
                         }
 
                         function newClientErrors(arg) {
-                            console.log(arg);
 
                             if(arg.email){
                                 var str = "";
@@ -424,7 +420,6 @@
                                 },
                                 data : information,
                                 success:function(data){
-                                    console.log(data);
                                     $('#addClient').hide();
                                     $('#addOrderAfterClient').removeClass('hide');
                                     addOrderData(data);
@@ -454,12 +449,11 @@
                                 },
                                 data : information,
                                 success:function(data){
-                                    window.location.replace("{{ url('/') }}/dashboard-employee/jobs/"+data);
+                                    window.location.href = "{{ url('/') }}/dashboard-employee/jobs/"+data;
                                 },
                                 error: function(data){
                                     $("#CustomerAddButton").attr("disabled", false);
                                     var errors = data.responseJSON;
-                                    console.log(errors);
                                 }
                             });
                         }

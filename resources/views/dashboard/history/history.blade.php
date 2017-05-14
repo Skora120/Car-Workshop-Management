@@ -8,39 +8,40 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+                     @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Type</th>
+                                <th>UserName</th>
                                 <th>Description</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($pagination as $key => $value)
-                            <tr onclick="redir('{{ $value['type'] }}/{{ $value['id'] }}');">
+                            <tr>
                                 <td>{{ $pagination->firstItem()+$key }}</td>
-                                <td>@if($value['type'] === 'jobs')
-                                        Job Orders
-                                    @elseif($value['type'] === 'clients')
-                                        Customer
-                                    @else
-                                        Car
-                                    @endif
-                                </td>
-                                <td>{{$value['description']}}</td>
-
+                                <td>{{ $value->username }}</td>
+                                <td>{{ $value->description }}</td>
+                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d-m-Y H:i') }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-                    <script>
-                        function redir(value){
-                            window.location.href = "{{ url()->route('dashboard-employee') }}/"+value;
-                        }
-                    </script>
 
-                {!! $pagination->links() !!}
+                    {{ $pagination->links() }}
+
                 </div>
             </div>
         </div>
