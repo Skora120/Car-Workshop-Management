@@ -1,5 +1,4 @@
-@extends('layouts.appEmployee')
-
+@extends('layouts.appClient')
 
 @section('content')
 <div class="container">
@@ -26,7 +25,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ url()->current()}}/password/put">
+                <form method="POST" action="{{ route('clientSettingsPut') }}">
                     <input type="hidden" name="_method" value="put">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
@@ -43,20 +42,6 @@
                 </div>
                 <div class="form-group">
                 <button type="submit" class="btn btn-primary">Update Password</button>
-                </div>
-                </form>
-
-                <hr>
-
-                <form method="POST" action="{{ url()->current()}}/phone/put">
-                    <input type="hidden" name="_method" value="put">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="form-group">
-                    <label for="phone_number">Phone Number</label> 
-                    <input class="form-control" type="number" name="phone_number" value="{{ $data->phone_number }}">
-                </div>
-                <div class="form-group">
-                <button type="submit" class="btn btn-primary">Update Phone Number</button>
                 </div>
                 </form>
             </div>

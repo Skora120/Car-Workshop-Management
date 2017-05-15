@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appEmployee')
 
 @section('content')
 <div class="container">
@@ -8,11 +8,17 @@
 
             <div class="panel-body">
             <a href="{{ url()->current() }}/edit" class="btn btn-primary">Edit</a>
-To do
-               Car information 
+             <h2>Car information:</h2> 
 
-               <pre>{{ print_r($data,true) }}</pre>
-               <pre>{{ print_r($owner,true) }}</pre>
+              <a href="{{ route('clients') }}/{{ $owner->id }}"><p>Owner: {{ $owner->name }}</p></a>
+              <p>Manufacturer: {{ $data->manufacturer }}</p>
+              <p>Model: {{ $data->model }}</p>
+              <p>Color: {{ $data->color }}</p>
+              <p>Engine: {{ $data->engine }}</p>
+              <p>Year: {{ $data->year }}</p>
+              <p>Vin: {{ $data->vin }}</p>
+              <p>Number plates: {{ $data->number_plates }}</p>
+              <p>Milage: {{ $data->milage }}</p>
             </div>
         </div>
     </div>

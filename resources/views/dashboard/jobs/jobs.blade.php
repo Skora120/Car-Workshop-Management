@@ -1,10 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.appEmployee')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">Dashboard</div>
+
+            <p>In Order: {{ $orderStatus[0] }}</p>
+            <p>In Progress: {{ $orderStatus[1] }}</p>
+            <p>Done: {{ $orderStatus[2] }}</p>
 
             <div class="panel-body">
                 @if (session('success'))

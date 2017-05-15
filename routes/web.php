@@ -12,7 +12,11 @@
 */
 
 //Workshop public page
-Route::get('/', 'PublicSiteController@index');
+//Route::get('/', 'PublicSiteController@index');
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Auth::routes();
 
@@ -96,6 +100,8 @@ Route::prefix('dashboard-employee')->group(function(){
 Route::prefix('dashboard')->group(function(){
 	//Clients routes
 	Route::get('/', 'DashboardClientController@index')->name('dashboard');
-
+	Route::get('/history', 'DashboardClientController@clientOrders')->name('clientViewOrders');
+	Route::get('/settings', 'DashboardClientController@settings')->name('clientSettings');
+	Route::put('/settings/put', 'DashboardClientController@settingsSave')->name('clientSettingsPut');
 
 });

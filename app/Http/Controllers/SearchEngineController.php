@@ -31,7 +31,7 @@ class SearchEngineController extends Controller
             if($orders){
             	foreach ($orders as $key => $value) {
             		$info = [
-            			'type' => 'jobs',
+            			'type' => 'Orders',
             			'id' => $value->id,
             			'description' => $value->description,
             		];
@@ -42,7 +42,7 @@ class SearchEngineController extends Controller
             if($clients){
             	foreach ($clients as $key => $value) {
             		$info = [
-            			'type' => 'clients',
+            			'type' => 'Customers',
             			'id' => $value->id,
             			'description' => $value->name,
             		];
@@ -53,7 +53,7 @@ class SearchEngineController extends Controller
             if($cars){
                 foreach ($cars as $key => $value) {
                     $info = [
-                        'type' => 'car',
+                        'type' => 'Cars',
                         'id' => $value->id,
                         'description' => $value->manufacturer." ".$value->model." ".$value->number_plates,
                     ];

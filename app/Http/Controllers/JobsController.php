@@ -59,9 +59,16 @@ class JobsController extends Controller
 
         $jobsArr = $jobs->toArray();
 
+        $ordersStatus = [];
+        $inOrder = JobOrders::where('progress', 1)->count('id');
+        $inProgress = JobOrders::where('progress', 2)->count('id');
+        $done = JobOrders::where('progress', 3)->count('id');
+
+        array_push($ordersStatus, $inOrder, $inProgress, $done);
+
         foreach ($jobs as $key => $value) {
 
-            $carInfo = $value->car()->get();
+            $carInfo = Cars::where('id', $value->car_id)->get();
             $jobsArr['data'][$key]['car'] = $carInfo[0]->manufacturer." ".$carInfo[0]->model;
 
             $jobsArr['data'][$key]['employee'] = $value->employee()->value('name');
@@ -92,7 +99,7 @@ class JobsController extends Controller
                     break;
             }
         }
-        return view('dashboard.jobs.jobs', ['data' => $jobsArr, 'pagination' => $jobs, 'swhat' => $scollumn, 'show' => $hsorted]);
+        return view('dashboard.jobs.jobs', ['data' => $jobsArr, 'pagination' => $jobs, 'swhat' => $scollumn, 'show' => $hsorted, 'orderStatus' => $ordersStatus]);
     }
 
     public function indexDescription($id)

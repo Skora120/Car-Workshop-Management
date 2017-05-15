@@ -1,12 +1,22 @@
-@extends('layouts.app')
+@extends('layouts.clear')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <a href="{{ route('login') }}"><div class="col-md-6">
+                            Login as Customer
+                        </div></a>
+                        <a href="{{ route('employee-login') }}"><div class="col-md-6">
+                            Login as Employe
+                        </div></a>
+                    </div>
+                </div>
                 <div class="panel-body">
+                    <strong>Customer login:</strong>
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
