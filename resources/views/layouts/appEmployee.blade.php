@@ -68,10 +68,11 @@
                 <input id="searchEngineLinkClients" type="hidden" value="{{ route('clients') }}">
                 <input id="searchEngineLinkJobs" type="hidden" value="{{ route('jobs') }}">
                 <input id="searchEngineLinkCars" type="hidden" value="{{ route('cars') }}">
-                <input id="searchEngine" type="search" placeholder="Search" class="form-control" name="query">
+                <input id="searchEngine" type="search" placeholder="Search" class="form-control" name="query" autocomplete="off">
                 <div id="searchEngineNavbarList" class="list-group aboveSearchNavList"></div>
             </div>
-            <button type="submit" class="btn btn-success">Search</button>
+            <button id="searchEngineSubmit" class="btn btn-success" onclick="event.preventDefault();
+                             window.location.href = $('#searchEngineLink').val()+'/'+$('#searchEngine').val();">Search</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
