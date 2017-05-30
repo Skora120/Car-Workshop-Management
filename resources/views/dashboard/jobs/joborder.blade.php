@@ -15,8 +15,10 @@
 
                     <div id='exists'>
                         <label for="description">Customer Exists?</label>
-                        <input type="radio" name="clientexist" onclick="existingClient(true)">Yes
-                        <input type="radio" name="clientexist" onclick="existingClient(false)">No
+                        <div>
+                            <button class="btn btn-lg btn-default" onclick="existingClient(true)">Yes</button>
+                            <button class="btn btn-lg btn-default" onclick="existingClient(false)">No</button>
+                        </div>
                     </div>
 
                     <!-- Add Client Ajax "form" -->

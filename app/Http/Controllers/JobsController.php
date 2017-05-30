@@ -68,12 +68,20 @@ class JobsController extends Controller
 
         foreach ($jobs as $key => $value) {
 
-            $carInfo = Cars::where('id', $value->car_id)->get();
-            $jobsArr['data'][$key]['car'] = $carInfo[0]->manufacturer." ".$carInfo[0]->model;
+            $carInfo = Cars::find($value->car_id);
+            if(!$carInfo){
+                $jobsArr['data'][$key]['car'] = 'Car deleted';
+            }else{
+                $jobsArr['data'][$key]['car'] = $carInfo->carInfo();  
+            }
 
             $jobsArr['data'][$key]['employee'] = $value->employee()->value('name');
 
-            $jobsArr['data'][$key]['client'] = $value->client()->value('name');
+            if(!$value->client()->value('name')){
+                $jobsArr['data'][$key]['client'] = 'Customer deleted';
+            }else{
+                $jobsArr['data'][$key]['client'] = $value->client()->value('name');
+            }
 
             switch ($value->progress) {
                 case 1:
@@ -104,11 +112,7 @@ class JobsController extends Controller
 
     public function indexDescription($id)
     {
-        $result = JobOrders::find($id);
-
-        if(empty($result)){
-            return view('dashboard.jobs.jobNotFound');
-        }
+        $result = JobOrders::findOrFail($id);
 
         $details = $result->details()->get();
 

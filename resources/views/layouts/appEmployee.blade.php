@@ -49,6 +49,7 @@
             <li><a href="{{ route('dashboard-employee') }}/jobs">Orders</a></li>
             <li><a href="{{ route('dashboard-employee') }}/clients">Clients</a></li>
             <li><a href="{{ route('dashboard-employee') }}/parts">Parts</a></li>
+            <li><a href="{{ route('dashboard-employee') }}/cars">Cars</a></li>
             <li><a href="{{ route('dashboard-employee') }}/advanced">Advenced</a></li>
             <li><a href="{{ route('dashboard-employee') }}/settings">Settings</a></li>
             <li>

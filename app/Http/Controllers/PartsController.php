@@ -36,8 +36,8 @@ class PartsController extends Controller
 
 	public function indexDescription($id)
 	{	
-		$result = Parts::where('id', $id)->get();
-		if(empty($result[0])){
+		$result = Parts::find($id);
+		if(!$result){
 			return redirect()->route('parts')->with('error', "Part doesn't exist");
 		}
 		return view('dashboard.parts.part', ['data' => $result]);

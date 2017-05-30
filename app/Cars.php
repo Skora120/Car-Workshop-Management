@@ -10,4 +10,9 @@ class Cars extends Model
     {
         return $this->hasOne('App\User','id','client_id');
     }
+
+    public function carInfo()
+    {
+        return $this->manufacturer." ".$this->model;
+    }
 }

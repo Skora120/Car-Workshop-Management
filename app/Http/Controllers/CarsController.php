@@ -31,7 +31,7 @@ class CarsController extends Controller
      */
     public function index()
     {
-        $cars = Cars::paginate(25);
+        $cars = Cars::orderBy('id', 'desc')->paginate(25);
         return view('dashboard.cars.cars', ['pagination' => $cars]);
     }
 
@@ -44,10 +44,17 @@ class CarsController extends Controller
         }        
 
         $owner =  User::find($car->client_id);
+        if(!$owner){
+        $ownerdata = (object)[
+            'id' => $car->client_id,
+            'name' => "Customer Deleted"
+        ];
+        }else{
         $ownerdata = (object)[
             'id' => $owner->id,
             'name' => $owner->name
         ];
+        }
         return view('dashboard.cars.car', ['data' => $car, 'owner' => $ownerdata]);
     }
 

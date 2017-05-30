@@ -12,12 +12,47 @@
                             {{ session('success') }}
                         </div>
                     @endif
-
-                <button class="btn btn-primary" data-toggle="modal" data-target="#detailAdd">Add new detail</button>
-                <a href="{{ url()->current() }}/edit"><button class="btn btn-primary">Edit</button></a>
-                <pre>{{print_r($data,true)}}</pre>
-				<pre>{{print_r($details,true)}}</pre>
-
+                <div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#detailAdd">Add new detail</button>
+                    <a href="{{ url()->current() }}/edit"><button class="btn btn-primary">Edit</button></a>
+                </div>
+                <hr>
+                <div>
+                    <p>Customer Name: <a href="{{ route('clients')}}/{{ $data->client_id }}">{{ $data->customerName() }}</a></p>
+                    <p>Car: <a href="{{ route('cars') }}/{{ $data->car_id }}">{{ $data->carInfo() }}</a></p>
+                    <p>Description: {{ $data->description }}</p>
+                    <p>Progress: {{ $data->formattedProgress() }}</p>
+                    <p>Pirority: {{ $data->formattedPirority() }}</p>
+                    <p>Created by: {{ $data->employeeInfo() }}</p>
+                </div>
+                <hr>
+                <div>
+                <p>Order Details</p>
+                @if(empty($details[0]))
+                    <p><strong>No details</strong></p>
+                @else
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Description</th>   
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($details as $key => $value)
+                        <tr>
+                            <td>{{ $value->description }}</td>
+                            <td>{{ $value->status }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- Add Detail Modal  https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
                 <div id="detailAdd" class="modal fade" role="dialog">
                   <div class="modal-dialog">
@@ -55,14 +90,4 @@
                     </div>
                   </div>
                 </div>
-
-
-
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

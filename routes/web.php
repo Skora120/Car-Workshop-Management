@@ -28,6 +28,7 @@ Route::post('/employee/login', 'Auth\EmployeeLoginController@login')->name('empl
 Route::prefix('dashboard-employee')->group(function(){
 	//Employees routes
 	Route::get('/', 'DashboardEmployeeController@index')->name('dashboard-employee');
+	Route::get('/advanced', 'DashboardEmployeeController@showAdvanced')->name('dashboard-advanced');
 
 	Route::get('/history', 'HistoryController@index')->name('history');
 

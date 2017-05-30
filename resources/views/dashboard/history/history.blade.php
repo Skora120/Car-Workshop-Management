@@ -39,9 +39,9 @@
                         @endforeach
                         </tbody>
                     </table>
-
-                    {{ $pagination->links() }}
-
+                    <div class="text-center">
+                        {{ $pagination->links() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -34,13 +34,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $result = User::all();
-
-        foreach ($result as $key => $value) {
-            $client = User::find($value->id);
-            $cars_count = $client->cars()->count();
-            $result[$key]['cars_count'] = $cars_count;
-        }
+        $result = User::paginate(5);
 
         return view('dashboard.clients.clients', ['data' => $result]);
     }
@@ -53,24 +47,11 @@ class ClientController extends Controller
             return redirect()->route('clients')->with('error', "Customer with that ID does not exist!");
         }
 
-        // Show profile and cars and magane
-        $user = [
-            'id' => $result->id,
-            'name' => $result->name,
-            'phone' => $result->phone_number,
-            'email' => $result->email,
-        ];
+        $cars = $result->cars();
 
-        $cars = Cars::where('client_id', $id)->get();
+        $orders = JobOrders::where('client_id', $id)->orderBy('progress', 'desc')->paginate(25);
 
-        $carNames = [];
-        foreach ($cars as $key => $value) {
-            $carNames[$value->id] = $value->manufacturer." ".$value->model;
-        }
-
-        $orders = JobOrders::where('client_id', $id)->orderBy('progress', 'desc')->paginate(15);
-
-        return view('dashboard.clients.client', ['user' => $user, 'cars' => $cars, 'orders' => $orders, 'carsNames' => $carNames]);
+        return view('dashboard.clients.client', ['user' => $result, 'cars' => $cars->get(), 'car' => $cars, 'orders' => $orders]);
     }
 
     public function searchAjax(Request $request)

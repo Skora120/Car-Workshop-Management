@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Cars', 'client_id', 'id');
     }
+
+    public function carCount()
+    {
+        return Cars::where('client_id', $this->id)->count('*');
+    }
 }

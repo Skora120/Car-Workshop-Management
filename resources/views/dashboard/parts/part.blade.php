@@ -4,13 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Dashboard
-            <button class="btn btn-primary" data-toggle="modal" data-target="#editModal">Edit Part</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Part</button>
-
-            </div>
-
+            <div class="panel-heading">Dashboard</div>
             <div class="panel-body">
+            <div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editModal">Edit Part</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Part</button>
+            </div>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -24,11 +23,13 @@
                     </div>
                 @endif
 
+                <hr>
 
-                <pre>{{ print_r($data, true) }}</pre>
-
-
-
+                <p>Description: {{ $data->description }}</p>
+                <p>For: {{ $data->shortinfo }}</p>
+                <p>Amount: {{ $data->amount }}</p>
+                <p>Part Number: {{ $data->part_number }}</p>
+                <p>Added by: {{ $data->employeeInfo() }}</p>
             </div>
         </div>
     </div>
@@ -46,18 +47,18 @@
             <form id="deleteModalForm" method="POST" action="{{ url()->current() }}/delete">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" value="{{ $data[0]->id }}">
+                <input type="hidden" name="id" value="{{ $data->id }}">
                 <div class="form-group">
                     <label for="description">Description</label> 
-                    <textarea disabled="true" rows="4" class="form-control" name="description">{{ $data[0]->description }}</textarea>
+                    <textarea disabled="true" rows="4" class="form-control" name="description">{{ $data->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="shortinfo">For</label> 
-                    <input disabled="true" type="text" class="form-control" name="shortinfo" value="{{ $data[0]->shortinfo }}">
+                    <input disabled="true" type="text" class="form-control" name="shortinfo" value="{{ $data->shortinfo }}">
                 </div>
                 <div class="form-group">
                     <label for="part_number">Part Number</label> 
-                    <input disabled="true" type="text" class="form-control" name="part_number" value="{{ $data[0]->shortinfo }}">
+                    <input disabled="true" type="text" class="form-control" name="part_number" value="{{ $data->shortinfo }}">
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-default" onClick="$(this).submit(function(e){e.preventDefault();
@@ -87,22 +88,22 @@
             <form id="editModal" method="POST" action="{{ url()->current() }}/put">
                 <input type="hidden" name="_method" value="put">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" value="{{ $data[0]->id }}">
+                <input type="hidden" name="id" value="{{ $data->id }}">
                 <div class="form-group">
                     <label for="description">Description</label> 
-                    <textarea rows="4" class="form-control" name="description">{{ $data[0]->description }}</textarea>
+                    <textarea rows="4" class="form-control" name="description">{{ $data->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="shortinfo">For</label> 
-                    <input type="text" class="form-control" name="shortinfo" value="{{ $data[0]->shortinfo }}">
+                    <input type="text" class="form-control" name="shortinfo" value="{{ $data->shortinfo }}">
                 </div>
                 <div class="form-group">
                     <label for="part_number">Part Number</label> 
-                    <input type="text" class="form-control" name="part_number" value="{{ $data[0]->shortinfo }}">
+                    <input type="text" class="form-control" name="part_number" value="{{ $data->shortinfo }}">
                 </div>
                 <div class="form-group">
                     <label for="amount">Amount</label> 
-                    <input type="number" class="form-control" name="amount" value="{{ $data[0]->amount }}">
+                    <input type="number" class="form-control" name="amount" value="{{ $data->amount }}">
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-default" onClick="$(this).submit(function(e){e.preventDefault();

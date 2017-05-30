@@ -5,14 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#customerEdit">Edit Customer</button>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#carAdd">Add Car</button>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#customerDelete">Delete Customer</button>
-
-                </div>
-
+                <div class="panel-heading">Dashboard</div>
                 <div class="panel-body">
+                    <div>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#customerEdit">Edit Customer</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#carAdd">Add Car</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#customerDelete">Delete Customer</button>
+                    </div>   
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -31,10 +30,17 @@
                         </div>
                     @endif
 
-                    @foreach($user as $key => $value)
-                        <p>{{ $value }}</p>
-                    @endforeach
+                    <hr>
 
+                    <p>Name: {{ $user->name }}</p>
+                    <p>Phone Number: {{ $user->phone_number }}</p>
+                    <p>Email: {{ $user->email }}</p>
+
+                    <hr>
+
+                    @if(empty($cars[0]))
+                        <p><strong>Customer does not have any cars!</strong></p>
+                    @else
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -57,9 +63,16 @@
                                 <td>{{ $value->year }}</td>
                             </tr>
                         @endforeach
+
                         </tbody>
                     </table>
+                    @endif
 
+                    <hr>
+                    
+                    @if(empty($orders[0]))
+                        <p><strong>Customer does not have any orders!</strong></p>
+                    @else
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -75,14 +88,15 @@
                             <tr onclick="redirj('{{$value->id}}');">
                                 <td>{{ $orders->firstItem()+$key }}</td>
                                 <td>{{ $value->description }}</td>
-                                <td>{{ $carsNames[$value->car_id] }}</td>
-                                <td><?php  switch($value->pirority) { case 3: echo 'Urgent'; break; case 2: echo 'High'; break; case 1: echo 'Normal'; break;} ?></td> 
-                                <td><?php  switch($value->progress) { case 3: echo 'Done'; break; case 2: echo 'In progress'; break; case 1: echo 'In order'; break;} ?></td>
+                                <td>{{ $orders[$key]->carInfo() }}</td>
+                                <td>{{ $value->formattedPirority() }}</td> 
+                                <td>{{ $value->formattedProgress() }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table> 
                     {{ $orders->links() }}
+                    @endif
                     <script>
                         function redirc(value){
                             window.location.href = "{{ url()->route('cars') }}/"+value;

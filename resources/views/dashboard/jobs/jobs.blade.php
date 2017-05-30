@@ -6,11 +6,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">Dashboard</div>
 
-            <p>In Order: {{ $orderStatus[0] }}</p>
-            <p>In Progress: {{ $orderStatus[1] }}</p>
-            <p>Done: {{ $orderStatus[2] }}</p>
 
             <div class="panel-body">
+            <p><strong>In Order:</strong> {{ $orderStatus[0] }}</p>
+            <p><strong>In Progress:</strong> {{ $orderStatus[1] }}</p>
+            <p><strong>Done:</strong> {{ $orderStatus[2] }}</p>
+            <p><a href="{{ route('createJob') }}"><button class="btn btn-primary">Create Order</button></a></p>
+
+
+            <hr>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -42,9 +46,9 @@
                     @endforeach
                     </tbody>
                 </table>
-
-                {{ $pagination->appends(['swhat' => $swhat, 'hsorted' => $show])->links() }}
-
+                <div class="text-center">
+                    {{ $pagination->appends(['swhat' => $swhat, 'hsorted' => $show])->links() }}
+                </div>
                 <script>
                     function redir(value){
                         window.location.href = "{{ url()->current() }}/"+value;

@@ -76,4 +76,9 @@ class DashboardEmployeeController extends Controller
 
         return back()->with('success', "Phone number changed successful!");
     }
+
+    public function showAdvanced()
+    {
+        return view('dashboard.dashboard_advanced');
+    }
 }

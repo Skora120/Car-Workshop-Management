@@ -111,9 +111,9 @@
                             @foreach($data->details as $key => $value)
                                 <tr>
                                     <td>{{$value->created_at}}</td>
-                                    <td>{{$value->employee_id}}</td>
+                                    <td>{{$value->employeeInfo()}}</td>
                                     <td id="desc{{$value->id}}">{{$value->description}}</td>
-                                    <td id="stat{{$value->id}}">{{$value->status}}</td>
+                                    <td id="stat{{$value->id}}">{{$value->formattedStatus()}}</td>
                                     <td style="width:20%">
                                         <div style="display:flex;">
                                             <div style="width: 55%">

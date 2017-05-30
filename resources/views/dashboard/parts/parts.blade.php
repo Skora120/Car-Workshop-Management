@@ -4,30 +4,31 @@
 <div class="container">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Dashboard
-
-            <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Part</button>
-            </div>
+            <div class="panel-heading">Dashboard</div>
 
             <div class="panel-body">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-                    @if (session('errors'))
-                        <div class="alert alert-danger">
-                        @foreach($errors->all() as $value)
-                                <p>{{ $value }}</p>
-                        @endforeach
-                        </div>
-                    @endif
+                <div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Part</button>
+                </div>
 
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (session('errors'))
+                    <div class="alert alert-danger">
+                    @foreach($errors->all() as $value)
+                            <p>{{ $value }}</p>
+                    @endforeach
+                    </div>
+                @endif
+                <hr>
                 <div class='row'>
                     <div class="col-md-12">
                             <input id="searchPart" class="form-control" type="text" placeholder="Type part car/description/part number">
@@ -38,6 +39,7 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>#</th> 
                             <th>Description</th> 
                             <th>For</th>  
                             <th>Amount</th>
@@ -47,6 +49,7 @@
                     <tbody>
                     @foreach($data as $key => $value)
                         <tr onclick="redir('{{ $value['id'] }}');">
+                            <td>{{$data->firstItem()+$key}}</td>
                             <td>{{$value['description']}}</td>
                             <td>{{$value['shortinfo']}}</td>
                             <td>{{$value['amount']}}</td>
@@ -56,7 +59,9 @@
                     </tbody>
                 </table>
 
-                {{ $data->links() }}
+                <div class="text-center">
+                    {{ $data->links() }}
+                </div>
 
                 <script>
                     $('#searchPart').keyup(function (e) {

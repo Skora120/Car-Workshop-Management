@@ -29,7 +29,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Name</th>
                                 <th>Phone Number</th>
                                 <th>Cars count</th>
@@ -37,15 +37,19 @@
                         </thead>
                         <tbody>
                         @foreach($data as $key => $value)
-                            <tr onclick="redir('{{$value['id']}}');">
-                                <td>{{$value['id']}}</td>
-                                <td>{{$value['name']}}</td>
-                                <td>{{$value['phone_number']}}</td>
-                                <td>{{$value['cars_count']}}</td>
+                            <tr onclick="redir('{{ $value->id }}');">
+                                <td>{{ $data->firstItem()+$key }}</td>
+                                <td>{{ $value->name }}</td>
+                                <td>{{ $value->phone_number }}</td>
+                                <td>{{ $value->carCount() }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    <div class="text-center">
+                        {{ $data->links() }}
+                    </div>
+
                     <script>
                         $('#searchClient').keyup(function (e) {
                             var str = $(this).val();
