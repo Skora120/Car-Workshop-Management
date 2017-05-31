@@ -99,8 +99,8 @@ class ClientController extends Controller
 
             $username = 'k' . str_random(5);
 
-            if(User::where('username', $username)->first()){
-                $username = 'k' . str_random(8);
+            while (User::where('username', $username)->first()) {
+                $username = 'k' . str_random(5);
             }
 
             $password = str_random(8);
@@ -185,9 +185,11 @@ class ClientController extends Controller
 
         $username = 'k' . str_random(5);
 
-        if(User::where('username', $username)->first()){
-            $username = 'k' . str_random(8);
+        while (User::where('username', $username)->first()) {
+            $username = 'k' . str_random(5);
         }
+
+
 
         $password = str_random(8);
         $passwordhash = Hash::make($password);

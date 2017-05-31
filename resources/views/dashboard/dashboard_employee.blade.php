@@ -5,20 +5,20 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Dashboard You are logged as Employee!</div>
 
                 <div class="panel-body">
-                    You are logged in as Employee!
-
-                    <p><a href="{{ url()->current() }}/jobs/newjob">Add new job order</a></p>
-                    <p><a href="{{ url()->current() }}/jobs?page=1">Current jobs</a></p>
-                    <p><a href="{{ url()->current() }}/clients">Clients</a></p>
-                    <p><a href="{{ url()->current() }}/clients/newclient">Add new client</a></p>
-                    <p><a href="{{ url()->current() }}/parts">Parts</a></p>
+                    <ul class="list-group">
+                    <a href="{{ url()->current() }}/jobs?page=1" class="list-group-item">Current Orders</a>
+                    <a href="{{ url()->current() }}/jobs/newjob" class="list-group-item">Create a new Order</a>
+                    <a href="{{ url()->current() }}/clients" class="list-group-item">Customers</a>
+                    <a href="{{ url()->current() }}/clients/newclient" class="list-group-item">Create a new customer account</a>
+                    <a href="{{ url()->current() }}/parts" class="list-group-item">Parts</a>
                     @if ($level > 5)
-                    <p><a href="{{ url()->current() }}/employees">Employees Management</a></p>
-                    <p><a href="{{ url()->current() }}/history">History</a></p>
+                    <a href="{{ url()->current() }}/employees" class="list-group-item">Employees Management</a>
+                    <a href="{{ url()->current() }}/history" class="list-group-item">History</a>
                     @endif
+                    </ul>
                 </div>
             </div>
         </div>
