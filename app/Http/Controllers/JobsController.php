@@ -10,8 +10,6 @@ use App\Employee;
 use App\JobDetails;
 use App\Cars;
 
-use Log;
-
 class JobsController extends Controller
 {
     /**
@@ -57,8 +55,6 @@ class JobsController extends Controller
             break;
         }
 
-        $jobsArr = $jobs->toArray();
-
         $ordersStatus = [];
         $inOrder = JobOrders::where('progress', 1)->count('id');
         $inProgress = JobOrders::where('progress', 2)->count('id');
@@ -66,48 +62,7 @@ class JobsController extends Controller
 
         array_push($ordersStatus, $inOrder, $inProgress, $done);
 
-        foreach ($jobs as $key => $value) {
-
-            $carInfo = Cars::find($value->car_id);
-            if(!$carInfo){
-                $jobsArr['data'][$key]['car'] = 'Car deleted';
-            }else{
-                $jobsArr['data'][$key]['car'] = $carInfo->carInfo();  
-            }
-
-            $jobsArr['data'][$key]['employee'] = $value->employee()->value('name');
-
-            if(!$value->client()->value('name')){
-                $jobsArr['data'][$key]['client'] = 'Customer deleted';
-            }else{
-                $jobsArr['data'][$key]['client'] = $value->client()->value('name');
-            }
-
-            switch ($value->progress) {
-                case 1:
-                    $jobsArr['data'][$key]['progress'] = "In order";
-                    break;
-                case 2:
-                    $jobsArr['data'][$key]['progress'] = "In progress";
-                    break;
-                case 3:
-                    $jobsArr['data'][$key]['progress'] = "Done";
-                    break;
-            }   
-
-            switch ($value->pirority) {
-                case 1:
-                    $jobsArr['data'][$key]['pirority'] = "Normal";
-                    break;
-                case 2:
-                    $jobsArr['data'][$key]['pirority'] = "High";
-                    break;
-                case 3:
-                    $jobsArr['data'][$key]['pirority'] = "Urgent";
-                    break;
-            }
-        }
-        return view('dashboard.jobs.jobs', ['data' => $jobsArr, 'pagination' => $jobs, 'swhat' => $scollumn, 'show' => $hsorted, 'orderStatus' => $ordersStatus]);
+        return view('dashboard.jobs.jobs', ['pagination' => $jobs, 'swhat' => $scollumn, 'show' => $hsorted, 'orderStatus' => $ordersStatus]);
     }
 
     public function indexDescription($id)

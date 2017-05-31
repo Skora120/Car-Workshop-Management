@@ -13,8 +13,6 @@ use Hash;
 use Validator;
 use Mail;
 
-use Log;
-
 class ClientController extends Controller
 {
     /**

@@ -17,18 +17,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['data'] as $key => $value)
+                        @foreach($data as $key => $value)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($value['created_at'])->format('d-m-Y H:i') }}</td>
-                                <td>{{$value['description']}}</td>
-                                <td>{{$value['car']}}</td>
-                                <td>{{$value['progress']}}</td>
+                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d-m-Y H:i') }}</td>
+                                <td>{{ $value->description }}</td>
+                                <td>{{ $value->carInfo() }}</td>
+                                <td>{{ $value->formattedProgress() }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-
-                    {{ $pagination->links() }}
+                    <div class="text-center">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

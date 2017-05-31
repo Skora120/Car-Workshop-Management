@@ -30,19 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-                @if(Auth::guard('employee')->check())
-                    <a class="navbar-brand" href="{{ url('/dashboard-employee') }}">
-                        Dashboard
-                    </a>
-                @elseif(!Auth::guest())
-                    <a class="navbar-brand" href="{{ url('/dashboard') }}">
-                        Dashboard
-                    </a>
-                @else
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        Dashboard
-                    </a>
-                @endif
+            <a class="navbar-brand" href="{{ url('/dashboard-employee') }}">Dashboard</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -50,7 +38,9 @@
             <li><a href="{{ route('dashboard-employee') }}/clients">Clients</a></li>
             <li><a href="{{ route('dashboard-employee') }}/parts">Parts</a></li>
             <li><a href="{{ route('dashboard-employee') }}/cars">Cars</a></li>
+            @if(Auth::user()->level > 5)
             <li><a href="{{ route('dashboard-employee') }}/advanced">Advenced</a></li>
+            @endif
             <li><a href="{{ route('dashboard-employee') }}/settings">Settings</a></li>
             <li>
                 <a href="{{ route('logout') }}"

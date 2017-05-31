@@ -10,8 +10,6 @@ use App\History;
 use Validator;
 use Auth;
 
-use Log;
-
 class CarsController extends Controller
 {
     /**

@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'employee.permissions' => \App\Http\Middleware\CheckPermissions::class,
         'employee.permissionsHistory' => \App\Http\Middleware\CheckPermissionsHistory::class,
+        'installer' => \App\Http\Middleware\Installer::class,
     ];
 }

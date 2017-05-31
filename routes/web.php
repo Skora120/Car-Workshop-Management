@@ -18,6 +18,11 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::prefix('installer')->group(function(){
+	Route::get('/', 'InstallerController@show');
+	Route::put('/update', 'InstallerController@update')->name('envUpdate');
+});
+
 Auth::routes();
 
 //Employee Login
@@ -95,7 +100,7 @@ Route::prefix('dashboard-employee')->group(function(){
 		Route::delete('/{id}/delete', 'PartsController@deletePart')->name('part-delete');
 		Route::get('/', 'PartsController@index')->name('parts');
 
-	});
+	});	
 });
 
 Route::prefix('dashboard')->group(function(){

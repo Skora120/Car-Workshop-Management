@@ -8,8 +8,6 @@ use Auth;
 use Validator;
 use Hash;
 
-use Log;
-
 class DashboardEmployeeController extends Controller
 {
     /**
@@ -79,6 +77,10 @@ class DashboardEmployeeController extends Controller
 
     public function showAdvanced()
     {
-        return view('dashboard.dashboard_advanced');
+        if(Auth::user()->level > 5) {
+            return view('dashboard.dashboard_advanced'); 
+        } else {
+            return redirect()->route('dashboard-employee');
+        }
     }
 }

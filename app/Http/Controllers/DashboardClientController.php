@@ -38,29 +38,7 @@ class DashboardClientController extends Controller
     public function clientOrders()
     {
         $result = JobOrders::where('client_id', Auth::id())->orderBy('progress', 'asc')->paginate(25);
-
-        $jobsArr = $result->toArray();
-
-        foreach ($result as $key => $value) {
-
-            $carInfo = Cars::where('id', $value->car_id)->get();
-            $jobsArr['data'][$key]['car'] = $carInfo[0]->manufacturer." ".$carInfo[0]->model;
-
-
-            switch ($value->progress) {
-                case 1:
-                    $jobsArr['data'][$key]['progress'] = "In order";
-                    break;
-                case 2:
-                    $jobsArr['data'][$key]['progress'] = "In progress";
-                    break;
-                case 3:
-                    $jobsArr['data'][$key]['progress'] = "Done";
-                    break;
-            }   
-        }
-
-        return view('dashboard.dashboard_client_orders', ['data' => $jobsArr, 'pagination' => $result]);
+        return view('dashboard.dashboard_client_orders', ['data' => $result]);
     }
 
     public function settings()

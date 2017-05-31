@@ -33,15 +33,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($pagination as $key => $value)
-                        <tr onclick="redir('{{ $value->id }}');">
-                            <td>{{ $value->created_at}}</td>
-                            <td>{{ $value->formattedProgress() }}</td>
-                            <td>{{ $value->description}}</td>
-                            <td>{{ $value->employeeInfo() }}</td>
-                            <td>{{ $value->customerName() }}</td>
-                            <td>{{ $value->carInfo() }}</td>
-                            <td>{{ $value->formattedPirority() }}</td>
+                    @foreach($data['data'] as $key => $value)
+                        <tr onclick="redir('{{$value['id']}}');">
+                            <td>{{$value['created_at']}}</td>
+                            <td>{{$value['progress']}}</td>
+                            <td>{{$value['description']}}</td>
+                            <td>{{$value['employee']}}</td>
+                            <td>{{$value['client']}}</td>
+                            <td>{{$value['car']}}</td>
+                            <td>{{$value['pirority']}}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -8,7 +8,6 @@ use App\JobOrders;
 use App\Parts;
 use App\Cars;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Log;
 
 class SearchEngineController extends Controller
 {

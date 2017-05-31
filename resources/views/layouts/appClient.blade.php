@@ -58,12 +58,6 @@
     </main>
       </div>
     </div>
-
-
-
-
-
-
     <!-- Scripts -->
     <script src="{{ asset('js/search.js') }}"></script>
 </body>

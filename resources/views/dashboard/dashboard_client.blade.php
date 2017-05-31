@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Your Card</div>
+                <div class="panel-heading">Your Profile</div>
 
                 <div class="panel-body">
                     <p>Name: {{ $user->name }}</p>
@@ -26,7 +26,7 @@
                             <p>Number: Plates {{ $value->number_plates }}</p>
                             <p>Milage: {{ $value->milage }}</p>
                         </div>
-
+                        <hr>
                     @endforeach
                 </div>
             </div>

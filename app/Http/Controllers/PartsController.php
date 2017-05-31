@@ -9,8 +9,6 @@ use App\History;
 use App\Employee;
 use Auth;
 
-use Log;
-
 class PartsController extends Controller
 {
     /**
